@@ -5,6 +5,7 @@ import services.JsonUtil
 import play.api.mvc.{Action, Controller}
 import db.UserDto
 import play.api.Logger
+import play.api.libs.json.Json
 
 object UserApi extends Controller {
   def create = Action(parse.json) {
@@ -45,6 +46,6 @@ object UserApi extends Controller {
       if (matchingUsers.isEmpty)
         NoContent
       else
-        Ok(JsonUtil.serialize(matchingUsers))
+        Ok(Json.toJson(matchingUsers))
   }
 }
