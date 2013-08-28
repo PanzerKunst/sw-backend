@@ -1,0 +1,14 @@
+USE steelwrapped;
+
+DROP TABLE USER;
+
+CREATE TABLE `user` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `public_key` VARCHAR(10240) NOT NULL,
+  PRIMARY KEY (`id`,`username`) USING BTREE
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+SELECT * FROM USER;

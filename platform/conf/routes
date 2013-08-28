@@ -1,0 +1,17 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+# Boilerplate
+GET     /crossdomain.xml            controllers.Assets.at(path="/public", file="crossdomain.xml")
+GET     /robots.txt                 controllers.Assets.at(path="/public", file="robots.txt")
+
+# Pages
+GET     /                           controllers.Application.index
+
+# API
+POST    /api/users                  controllers.api.UserApi.create
+GET     /api/users                  controllers.api.UserApi.get
