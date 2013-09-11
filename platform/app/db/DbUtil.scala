@@ -1,12 +1,7 @@
 package db
 
-import java.text.SimpleDateFormat
-import java.util.Date
 
 object DbUtil {
-  private val dbDateFormat: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd")
-  val dbDatetimeFormat: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-
   def generateWhereClause(filters: Option[Map[String, String]]) = {
     filters match {
       case Some(filtrs) => {
@@ -24,11 +19,11 @@ object DbUtil {
       .replaceAll("'", "\\\\'")
   }
 
-  def dateToString(date: Date): String = {
-    dbDateFormat.format(date)
-  }
+  def parseToList[T](string: String): List[T] = {
+    val arrayOfString = string.split(',')
 
-  def datetimeToString(date: Date): String = {
-    dbDatetimeFormat.format(date)
+    val listOfCorrectType = for (item <- arrayOfString) yield item.asInstanceOf[T]
+
+    listOfCorrectType.toList
   }
 }

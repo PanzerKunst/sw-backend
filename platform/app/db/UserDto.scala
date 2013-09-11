@@ -5,6 +5,9 @@ import models.User
 import play.api.db.DB
 import play.api.Play.current
 import play.api.Logger
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException
+import controllers.api.UsernameAlreadyTakenException
+import java.math.BigInteger
 
 
 object UserDto {
@@ -20,11 +23,11 @@ object UserDto {
 
         SQL(query)().map(row =>
           User(
-            id = Some(row[Long]("id")),
-            firstName = Some(row[String]("first_name")),
-            lastName = Some(row[String]("last_name")),
-            username = Some(row[String]("username")),
-            publicKey = Some(row[String]("public_key"))
+            id = Some(row[BigInteger]("id").longValue),
+            firstName = row[String]("first_name"),
+            lastName = row[String]("last_name"),
+            username = row[String]("username"),
+            publicKey = row[String]("public_key")
           )
         ).toList
     }
@@ -36,14 +39,26 @@ object UserDto {
 
         val query = """
                        insert into user(first_name, last_name, username, public_key)
-          values("""" + DbUtil.backslashQuotes(user.firstName.get) + """", """" +
-          DbUtil.backslashQuotes(user.lastName.get) + """", """" +
-          DbUtil.backslashQuotes(user.username.get) + """", {publicKey});"""
+          values("""" + DbUtil.backslashQuotes(user.firstName) + """",
+          """" + DbUtil.backslashQuotes(user.lastName) + """",
+          """" + DbUtil.backslashQuotes(user.username) + """",
+          {publicKey});"""
 
         Logger.info("UserDto.create():" + query)
 
-        SQL(query).on("publicKey" -> user.publicKey.get)
-          .executeInsert()
+        try {
+          SQL(query).on("publicKey" -> user.publicKey)
+            .executeInsert()
+        }
+        catch {
+          case msicve: MySQLIntegrityConstraintViolationException =>
+                                                                                                                                                               """Duplicate\sentry.+for\skey\s'unique_username'""".r.findFirstIn(msicve.getMessage) match {
+              case Some(foo) => throw new UsernameAlreadyTakenException
+              case None => throw msicve
+            }
+          case e: Exception =>
+            throw e
+        }
     }
   }
 
@@ -53,9 +68,9 @@ object UserDto {
 
         val query = """
                        update user set
-          first_name = """" + DbUtil.backslashQuotes(user.firstName.get) + """",
-          last_name = """" + DbUtil.backslashQuotes(user.lastName.get) + """",
-          public_key = """" + DbUtil.backslashQuotes(user.publicKey.get) + """";"""
+          first_name = """" + DbUtil.backslashQuotes(user.firstName) + """",
+          last_name = """" + DbUtil.backslashQuotes(user.lastName) + """",
+          public_key = """" + DbUtil.backslashQuotes(user.publicKey) + """";"""
 
         Logger.info("UserDto.update():" + query)
 

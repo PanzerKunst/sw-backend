@@ -15,3 +15,7 @@ GET     /                           controllers.Application.index
 # API
 POST    /api/users                  controllers.api.UserApi.create
 GET     /api/users                  controllers.api.UserApi.get
+GET     /api/users/:id              controllers.api.UserApi.getOfId(id: Int)
+
+POST    /api/emails                 controllers.api.EmailApi.create
+GET     /api/emails/:id             controllers.api.EmailApi.getOfId(id: Int)

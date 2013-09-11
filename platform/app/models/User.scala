@@ -7,10 +7,10 @@ case class User(
                  @JsonDeserialize(contentAs = classOf[java.lang.Long])
                  id: Option[Long] = None,
 
-                 firstName: Option[String] = None,
-                 lastName: Option[String] = None,
-                 username: Option[String] = None,
-                 publicKey: Option[String] = None)
+                 firstName: String,
+                 lastName: String,
+                 username: String,
+                 publicKey: String)
 
 object User {
   implicit val writes = new Writes[User] {
