@@ -3,10 +3,11 @@ package db
 import play.api.db.DB
 import anorm._
 import play.api.Play.current
+import play.api.Logger
 
 object DbAdmin {
   def createTables() {
-    createTableUser()
+    createTableAccount()
     createTableEmail()
     createTableTo()
     createTableCc()
@@ -22,18 +23,18 @@ object DbAdmin {
     dropTableCc()
     dropTableTo()
     dropTableEmail()
-    dropTableUser()
+    dropTableAccount()
   }
 
   def initData() {
   }
 
-  private def createTableUser() {
+  private def createTableAccount() {
     DB.withConnection {
       implicit c =>
 
         val query = """
-          CREATE TABLE USER (
+          CREATE TABLE account (
             id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             first_name VARCHAR(64) NOT NULL,
             last_name VARCHAR(64) NOT NULL,
@@ -43,6 +44,8 @@ object DbAdmin {
             UNIQUE INDEX unique_username (username)
           ) ENGINE=INNODB DEFAULT CHARSET=utf8;
         """
+
+        Logger.info("DbAdmin.createTableAccount():" + query)
 
         SQL(query).executeUpdate()
     }
@@ -65,13 +68,16 @@ object DbAdmin {
             smtp_bcc VARCHAR(5120),
             smtp_reply_to VARCHAR(64),
             smtp_sender VARCHAR(128),
-            from_user_id BIGINT UNSIGNED,
+            from_account_id BIGINT UNSIGNED,
             creation_timestamp INT UNSIGNED NOT NULL,
+            status VARCHAR(16), /* DRAFT, SENT, UNREAD, READ, ARCHIVED */
             PRIMARY KEY (id),
             UNIQUE INDEX unique_smtp_message_id (smtp_message_id),
-            CONSTRAINT fk_user FOREIGN KEY (from_user_id) REFERENCES USER (id)
+            CONSTRAINT fk_account FOREIGN KEY (from_account_id) REFERENCES account (id)
           ) ENGINE=INNODB DEFAULT CHARSET=utf8;
-        """
+                    """
+
+        Logger.info("DbAdmin.createTableEmail():" + query)
 
         SQL(query).executeUpdate()
     }
@@ -91,6 +97,8 @@ object DbAdmin {
           ) ENGINE=INNODB DEFAULT CHARSET=utf8;
                     """
 
+        Logger.info("DbAdmin.createTableTo():" + query)
+
         SQL(query).executeUpdate()
     }
   }
@@ -108,6 +116,8 @@ object DbAdmin {
             CONSTRAINT fk_email_cc FOREIGN KEY (email_id) REFERENCES email (id)
           ) ENGINE=INNODB DEFAULT CHARSET=utf8;
         """
+
+        Logger.info("DbAdmin.createTableCc():" + query)
 
         SQL(query).executeUpdate()
     }
@@ -127,6 +137,8 @@ object DbAdmin {
           ) ENGINE=INNODB DEFAULT CHARSET=utf8;
         """
 
+        Logger.info("DbAdmin.createTableBcc():" + query)
+
         SQL(query).executeUpdate()
     }
   }
@@ -136,7 +148,7 @@ object DbAdmin {
       implicit c =>
 
         val query = """
-          CREATE TABLE smpt_references (
+          CREATE TABLE smtp_references (
             id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             email_id BIGINT UNSIGNED NOT NULL,
             references_email_id BIGINT UNSIGNED NOT NULL,
@@ -145,6 +157,8 @@ object DbAdmin {
             CONSTRAINT fk_references_email_smtp_references FOREIGN KEY (references_email_id) REFERENCES email (id)
           ) ENGINE=INNODB DEFAULT CHARSET=utf8;
         """
+
+        Logger.info("DbAdmin.createTableSmtpReferences():" + query)
 
         SQL(query).executeUpdate()
     }
@@ -155,7 +169,7 @@ object DbAdmin {
       implicit c =>
 
         val query = """
-          CREATE TABLE smpt_in_reply_to (
+          CREATE TABLE smtp_in_reply_to (
             id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             email_id BIGINT UNSIGNED NOT NULL,
             reply_to_email_id BIGINT UNSIGNED NOT NULL,
@@ -165,56 +179,72 @@ object DbAdmin {
           ) ENGINE=INNODB DEFAULT CHARSET=utf8;
         """
 
+        Logger.info("DbAdmin.createTableSmtpInReplyTo():" + query)
+
         SQL(query).executeUpdate()
     }
   }
 
-  private def dropTableUser() {
+  private def dropTableAccount() {
     DB.withConnection {
       implicit c =>
-        SQL("drop table if exists user;").executeUpdate()
+        val query = "drop table if exists account;"
+        Logger.info("DbAdmin.dropTableAccount(): " + query)
+        SQL(query).executeUpdate()
     }
   }
 
   private def dropTableEmail() {
     DB.withConnection {
       implicit c =>
-        SQL("drop table if exists email;").executeUpdate()
+        val query = "drop table if exists email;"
+        Logger.info("DbAdmin.dropTableEmail(): " + query)
+        SQL(query).executeUpdate()
     }
   }
 
   private def dropTableTo() {
     DB.withConnection {
       implicit c =>
-        SQL("drop table if exists to;").executeUpdate()
+        val query = "drop table if exists `to`;"
+        Logger.info("DbAdmin.dropTableTo(): " + query)
+        SQL(query).executeUpdate()
     }
   }
 
   private def dropTableCc() {
     DB.withConnection {
       implicit c =>
-        SQL("drop table if exists cc;").executeUpdate()
+        val query = "drop table if exists cc;"
+        Logger.info("DbAdmin.dropTableCc(): " + query)
+        SQL(query).executeUpdate()
     }
   }
 
   private def dropTableBcc() {
     DB.withConnection {
       implicit c =>
-        SQL("drop table if exists bcc;").executeUpdate()
+        val query = "drop table if exists bcc;"
+        Logger.info("DbAdmin.dropTableBcc(): " + query)
+        SQL(query).executeUpdate()
     }
   }
 
   private def dropTableSmtpReferences() {
     DB.withConnection {
       implicit c =>
-        SQL("drop table if exists smtp_references;").executeUpdate()
+        val query = "drop table if exists smtp_references;"
+        Logger.info("DbAdmin.dropTableSmtpReferences(): " + query)
+        SQL(query).executeUpdate()
     }
   }
 
   private def dropTableSmtpInReplyTo() {
     DB.withConnection {
       implicit c =>
-        SQL("drop table if exists smtp_in_reply_to;").executeUpdate()
+        val query = "drop table if exists smtp_in_reply_to;"
+        Logger.info("DbAdmin.SmtpInReplyTo(): " + query)
+        SQL(query).executeUpdate()
     }
   }
 }

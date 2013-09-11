@@ -35,18 +35,21 @@ class ClientSideEmail {
   var smtpBcc: Option[String] = None
 
   @JsonProperty
-  var smtpReplyTo: Option[String] = _
+  var smtpReplyTo: Option[String] = None
 
   @JsonProperty
   var smtpSender: Option[String] = None
 
   @JsonProperty
   @JsonDeserialize(contentAs = classOf[java.lang.Long])
-  var fromUserId: Option[Long] = None
+  var fromAccountId: Option[Long] = None
 
   @JsonProperty
   @JsonDeserialize(contentAs = classOf[java.lang.Long])
   var creationTimestamp: Long = _
+
+  @JsonProperty
+  var status: String = _
 
 
   @JsonProperty
@@ -63,10 +66,10 @@ class ClientSideEmail {
   var smtpReferences: List[Long] = List()
 
   def this(email: Email,
-           to: List[String],
-           cc: List[String],
-           bcc: List[String],
-           smtpReferences: List[Long]) = {
+           _to: List[String],
+           _cc: List[String],
+           _bcc: List[String],
+           _smtpReferences: List[Long]) = {
     this()
 
     this.id = Some(email.id)
@@ -80,34 +83,27 @@ class ClientSideEmail {
     this.smtpBcc = email.smtpBcc
     this.smtpReplyTo = email.smtpReplyTo
     this.smtpSender = email.smtpSender
-    this.fromUserId = email.fromUserId
+    this.fromAccountId = email.fromAccountId
     this.creationTimestamp = email.creationTimestamp
+    this.status = email.status
 
-    this.to = to
-    this.cc = cc
-    this.bcc = bcc
-    this.smtpReferences = smtpReferences
+    // Without the underscore on the 4 following variable, Jackson deserialization fucks up
+    this.to = _to
+    this.cc = _cc
+    this.bcc = _bcc
+    this.smtpReferences = _smtpReferences
   }
 
-  /* TODO: remove? def toEmail: Email = {
-    models.Email(this.id.get,
-      this.subject,
-      this.body,
-      this.contentType,
-      this.smtpMessageId.get,
-      this.smtpFrom,
-      this.smtpTo,
-      this.smtpCc,
-      this.smtpBcc,
-      this.smtpReplyTo,
-      this.smtpSender,
-      this.fromUserId,
-      this.creationTimestamp
-    )
-  } */
-
   def validate: Option[String] = {
-    if (this.to.length == 0 && this.cc.length == 0 && this.bcc.length == 0) {
+    if (this.status != Email.STATUS_DRAFT &&
+      this.status != Email.STATUS_ARCHIVED &&
+      this.status != Email.STATUS_READ &&
+      this.status != Email.STATUS_SENT &&
+      this.status != Email.STATUS_UNREAD) {
+
+      Some(ClientSideEmail.ERROR_MSG_INCORRECT_STATUS)
+    }
+    else if (this.to.length == 0 && this.cc.length == 0 && this.bcc.length == 0) {
       Some(ClientSideEmail.ERROR_MSG_TO_CC_BCC_ALL_EMPTY)
     }
     else {
@@ -118,27 +114,29 @@ class ClientSideEmail {
 
 object ClientSideEmail {
   val ERROR_MSG_TO_CC_BCC_ALL_EMPTY = "'to', 'cc' and 'bcc' cannot all be empty"
+  val ERROR_MSG_INCORRECT_STATUS = "Incorrect status"
 
   implicit val writes = new Writes[ClientSideEmail] {
-    def writes(user: ClientSideEmail): JsValue = {
+    def writes(email: ClientSideEmail): JsValue = {
       Json.obj(
-        "id" -> user.id,
-        "subject" -> user.subject,
-        "body" -> user.body,
-        "contentType" -> user.contentType,
-        "smtpMessageId" -> user.smtpMessageId,
-        "smtpFrom" -> user.smtpFrom,
-        "smtpTo" -> user.smtpTo,
-        "smtpCc" -> user.smtpCc,
-        "smtpBcc" -> user.smtpBcc,
-        "smtpReplyTo" -> user.smtpReplyTo,
-        "smtpSender" -> user.smtpSender,
-        "fromUserId" -> user.fromUserId,
-        "creationTimestamp" -> user.creationTimestamp,
-        "to" -> user.to,
-        "cc" -> user.cc,
-        "bcc" -> user.bcc,
-        "smtpReferences" -> user.smtpReferences
+        "id" -> email.id,
+        "subject" -> email.subject,
+        "body" -> email.body,
+        "contentType" -> email.contentType,
+        "smtpMessageId" -> email.smtpMessageId,
+        "smtpFrom" -> email.smtpFrom,
+        "smtpTo" -> email.smtpTo,
+        "smtpCc" -> email.smtpCc,
+        "smtpBcc" -> email.smtpBcc,
+        "smtpReplyTo" -> email.smtpReplyTo,
+        "smtpSender" -> email.smtpSender,
+        "fromAccountId" -> email.fromAccountId,
+        "creationTimestamp" -> email.creationTimestamp,
+        "status" -> email.status,
+        "to" -> email.to,
+        "cc" -> email.cc,
+        "bcc" -> email.bcc,
+        "smtpReferences" -> email.smtpReferences
       )
     }
   }

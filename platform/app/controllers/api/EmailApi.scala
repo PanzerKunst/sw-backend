@@ -2,12 +2,16 @@ package controllers.api
 
 import services.JsonUtil
 import play.api.mvc.{Action, Controller}
-import db.EmailDto
+import db._
 import models.clientSide.ClientSideEmail
 import play.api.libs.json.Json
+import javax.security.auth.login.AccountNotFoundException
+import scala.Some
 
 object EmailApi extends Controller {
   val HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY = 520
+  val HTTP_STATUS_ACCOUNT_NOT_FOUND = 521
+  val HTTP_STATUS_INCORRECT_STATUS = 522
 
   def create = Action(parse.json) {
     implicit request =>
@@ -16,11 +20,33 @@ object EmailApi extends Controller {
 
       clientSideEmail.validate match {
         case Some(errorMsg) =>
-          Status(HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY)
+          if (errorMsg == ClientSideEmail.ERROR_MSG_TO_CC_BCC_ALL_EMPTY)
+            Status(HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY)
+          else
+            Status(HTTP_STATUS_INCORRECT_STATUS)
         case None =>
-          EmailDto.create(clientSideEmail) match {
-            case Some(id) => Ok(id.toString)
-            case None => InternalServerError("Creation of an email did not return an ID!")
+          try {
+            EmailDto.create(clientSideEmail) match {
+              case Some(id) =>
+                for (address <- clientSideEmail.to)
+                  ToDto.create(id, address)
+
+                for (address <- clientSideEmail.cc)
+                  CcDto.create(id, address)
+
+                for (address <- clientSideEmail.bcc)
+                  BccDto.create(id, address)
+
+                for (emailId <- clientSideEmail.smtpReferences)
+                  SmtpReferencesDto.create(id, emailId)
+
+                Ok(id.toString)
+              case None => InternalServerError("Creation of an email did not return an ID!")
+            }
+          }
+          catch {
+            case anfe: AccountNotFoundException => Status(HTTP_STATUS_ACCOUNT_NOT_FOUND)
+            case e: Exception => InternalServerError(e.getMessage)
           }
       }
   }
@@ -28,7 +54,7 @@ object EmailApi extends Controller {
   def getOfId(id: Int) = Action {
     implicit request =>
 
-      val filters = Some(Map("id" -> id.toString))
+      val filters = Some(Map("e.id" -> id.toString))
 
       val matchingEmails = EmailDto.get(filters)
 

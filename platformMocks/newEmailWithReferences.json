@@ -5,7 +5,7 @@
     "contentType": "text/plain",
     "smtpMessageId": null,
     "smtpFrom": "root <root@reportingfromtheborderland.net>",
-    "smtpTo": null,
+    "smtpTo": "Christophe <cbramdit@reportingfromtheborderland.net>",
     "smtpCc": null,
     "smtpBcc": null,
     "smtpReplyTo": null,
@@ -18,5 +18,5 @@
     ],
     "cc": [],
     "bcc": [],
-    "smtpReferences": []
+    "smtpReferences": [1, 2]
 }

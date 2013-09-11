@@ -7,6 +7,8 @@ import play.api.Play.current
 import play.api.Logger
 import models.clientSide.ClientSideEmail
 import java.math.BigInteger
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException
+import javax.security.auth.login.AccountNotFoundException
 
 object EmailDto {
   def get(filters: Option[Map[String, String]]): List[Email] = {
@@ -14,8 +16,16 @@ object EmailDto {
       implicit c =>
 
         val query = """
-          select id, subject, body, content_type, smtp_message_id, smtp_from, smtp_to, smtp_cc, smtp_bcc, smtp_reply_to, smtp_sender, from_user_id, creation_timestamp
-          from email """ + DbUtil.generateWhereClause(filters) + ";"
+          SELECT e.*,
+          `to`.address AS to_address,
+          cc.address AS cc_address,
+          bcc.address AS bcc_address,
+          r.references_email_id
+          FROM email e
+          LEFT JOIN `to` ON `to`.email_id = e.id
+          LEFT JOIN cc ON cc.email_id = e.id
+          LEFT JOIN bcc ON bcc.email_id = e.id
+          LEFT JOIN smtp_references r ON r.email_id = e.id """ + DbUtil.generateWhereClause(filters) + ";"
 
         Logger.info("EmailDto.get():" + query)
 
@@ -33,8 +43,12 @@ object EmailDto {
             smtpBcc = row[Option[String]]("smtp_bcc"),
             smtpReplyTo = row[Option[String]]("smtp_reply_to"),
             smtpSender = row[Option[String]]("smtp_sender"),
-            fromUserId = row[Option[Long]]("from_user_id"),
-            creationTimestamp = row[Long]("creation_timestamp")
+            fromAccountId = row[Option[BigInteger]]("from_account_id") match {
+              case Some(fromAccountId) => Some(fromAccountId.longValue())
+              case None => None
+            },
+            creationTimestamp = row[Long]("creation_timestamp"),
+            status = row[String]("status")
           )
         ).toList
     }
@@ -73,7 +87,7 @@ object EmailDto {
           smtpSenderForQuery = "\"" + DbUtil.backslashQuotes(email.smtpSender.get) + "\""
 
         val query = """
-                       insert into email(subject, body, content_type, smtp_message_id, smtp_from, smtp_to, smtp_cc, smtp_bcc, smtp_reply_to, smtp_sender, from_user_id, creation_timestamp)
+                       insert into email(subject, body, content_type, smtp_message_id, smtp_from, smtp_to, smtp_cc, smtp_bcc, smtp_reply_to, smtp_sender, from_account_id, creation_timestamp, status)
           values(""" + subjectForQuery + """,
           {body},
           """" + email.contentType + """",
@@ -84,14 +98,26 @@ object EmailDto {
           """ + smtpBccForQuery + """,
           """ + smtpReplyToForQuery + """,
           """ + smtpSenderForQuery + """,
-          """ + email.fromUserId.getOrElse("NULL") + """,
-          """ + email.creationTimestamp + """);"""
+          """ + email.fromAccountId.getOrElse("NULL") + """,
+          """ + email.creationTimestamp + """,
+          """" + email.status + """");"""
 
         Logger.info("EmailDto.create():" + query)
 
-        // We need to use "on" otherwise the new lines inside the "bodyForQuery" are removed
-        SQL(query).on("body" -> bodyForQuery)
-          .executeInsert()
+        try {
+          // We need to use "on" otherwise the new lines inside the "bodyForQuery" are removed
+          SQL(query).on("body" -> bodyForQuery)
+            .executeInsert()
+        }
+        catch {
+          case msicve: MySQLIntegrityConstraintViolationException =>
+            """CONSTRAINT\s`fk_account`\sFOREIGN\sKEY\s\(`from_account_id`\)\sREFERENCES\s`account`\s\(`id`\)""".r.findFirstIn(msicve.getMessage) match {
+              case Some(foo) => throw new AccountNotFoundException
+              case None => throw msicve
+            }
+          case e: Exception =>
+            throw e
+        }
     }
   }
 }

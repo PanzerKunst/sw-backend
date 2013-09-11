@@ -15,8 +15,9 @@ case class Email(id: Long,
                  smtpBcc: Option[String] = None,
                  smtpReplyTo: Option[String] = None,
                  smtpSender: Option[String] = None,
-                 fromUserId: Option[Long] = None,
-                 creationTimestamp: Long)
+                 fromAccountId: Option[Long] = None,
+                 creationTimestamp: Long,
+                 status: String)
 
 
 object Email {
@@ -25,4 +26,10 @@ object Email {
   def generateSmtpMessageId(): String = {
     new Date().getTime + "." + new Random().nextInt() + "@" + Play.application().configuration().getString("email.domain")
   }
+
+  val STATUS_DRAFT = "DRAFT"
+  val STATUS_SENT = "SENT"
+  val STATUS_UNREAD = "UNREAD"
+  val STATUS_READ = "READ"
+  val STATUS_ARCHIVED = "ARCHIVED"
 }

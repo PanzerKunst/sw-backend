@@ -1,7 +1,7 @@
 package db
 
 import anorm._
-import models.User
+import models.Account
 import play.api.db.DB
 import play.api.Play.current
 import play.api.Logger
@@ -10,19 +10,19 @@ import controllers.api.UsernameAlreadyTakenException
 import java.math.BigInteger
 
 
-object UserDto {
-  def get(filters: Option[Map[String, String]]): List[User] = {
+object AccountDto {
+  def get(filters: Option[Map[String, String]]): List[Account] = {
     DB.withConnection {
       implicit c =>
 
         val query = """
           select id, first_name, last_name, username, public_key
-          from user """ + DbUtil.generateWhereClause(filters) + ";"
+          from account """ + DbUtil.generateWhereClause(filters) + ";"
 
-        Logger.info("UserDto.get():" + query)
+        Logger.info("AccountDto.get():" + query)
 
         SQL(query)().map(row =>
-          User(
+          Account(
             id = Some(row[BigInteger]("id").longValue),
             firstName = row[String]("first_name"),
             lastName = row[String]("last_name"),
@@ -33,26 +33,26 @@ object UserDto {
     }
   }
 
-  def create(user: User): Option[Long] = {
+  def create(account: Account): Option[Long] = {
     DB.withConnection {
       implicit c =>
 
         val query = """
-                       insert into user(first_name, last_name, username, public_key)
-          values("""" + DbUtil.backslashQuotes(user.firstName) + """",
-          """" + DbUtil.backslashQuotes(user.lastName) + """",
-          """" + DbUtil.backslashQuotes(user.username) + """",
+                       insert into account(first_name, last_name, username, public_key)
+          values("""" + DbUtil.backslashQuotes(account.firstName) + """",
+          """" + DbUtil.backslashQuotes(account.lastName) + """",
+          """" + DbUtil.backslashQuotes(account.username) + """",
           {publicKey});"""
 
-        Logger.info("UserDto.create():" + query)
+        Logger.info("AccountDto.create():" + query)
 
         try {
-          SQL(query).on("publicKey" -> user.publicKey)
+          SQL(query).on("publicKey" -> account.publicKey)
             .executeInsert()
         }
         catch {
           case msicve: MySQLIntegrityConstraintViolationException =>
-                                                                                                                                                               """Duplicate\sentry.+for\skey\s'unique_username'""".r.findFirstIn(msicve.getMessage) match {
+            """Duplicate\sentry.+for\skey\s'unique_username'""".r.findFirstIn(msicve.getMessage) match {
               case Some(foo) => throw new UsernameAlreadyTakenException
               case None => throw msicve
             }
@@ -62,17 +62,17 @@ object UserDto {
     }
   }
 
-  def update(user: User) {
+  def update(user: Account) {
     DB.withConnection {
       implicit c =>
 
         val query = """
-                       update user set
+                       update account set
           first_name = """" + DbUtil.backslashQuotes(user.firstName) + """",
           last_name = """" + DbUtil.backslashQuotes(user.lastName) + """",
           public_key = """" + DbUtil.backslashQuotes(user.publicKey) + """";"""
 
-        Logger.info("UserDto.update():" + query)
+        Logger.info("AccountDto.update():" + query)
 
         SQL(query).executeUpdate()
     }

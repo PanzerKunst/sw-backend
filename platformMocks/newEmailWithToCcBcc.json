@@ -1,0 +1,27 @@
+{
+    "id": null,
+	"subject": null,
+    "body": "Hello,\nWorld!",
+    "contentType": "text/plain",
+    "smtpMessageId": null,
+    "smtpFrom": "root <root@reportingfromtheborderland.net>",
+    "smtpTo": "Christophe <cbramdit@reportingfromtheborderland.net>, Gamma",
+    "smtpCc": "Alpha <alpha@reportingfromtheborderland.net>",
+    "smtpBcc": "beta@reportingfromtheborderland.net",
+    "smtpReplyTo": null,
+    "smtpSender": null,
+    "fromAccountId": null,
+    "creationTimestamp": 1378885425,
+    "status": "DRAFT",
+    "to": [
+        "cbramdit@reportingfromtheborderland.net",
+        "gamma@reportingfromtheborderland.net"
+    ],
+    "cc": [
+        "alpha@reportingfromtheborderland.net"
+    ],
+    "bcc": [
+        "beta@reportingfromtheborderland.net"
+    ],
+    "smtpReferences": []
+}

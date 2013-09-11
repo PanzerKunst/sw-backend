@@ -13,9 +13,12 @@ GET     /robots.txt                 controllers.Assets.at(path="/public", file="
 GET     /                           controllers.Application.index
 
 # API
-POST    /api/users                  controllers.api.UserApi.create
-GET     /api/users                  controllers.api.UserApi.get
-GET     /api/users/:id              controllers.api.UserApi.getOfId(id: Int)
+POST    /api/db/admin               controllers.api.DbAdminApi.createTables
+DELETE  /api/db/admin               controllers.api.DbAdminApi.dropTables
+
+POST    /api/accounts               controllers.api.AccountApi.create
+GET     /api/accounts               controllers.api.AccountApi.get
+GET     /api/accounts/:id           controllers.api.AccountApi.getOfId(id: Int)
 
 POST    /api/emails                 controllers.api.EmailApi.create
 GET     /api/emails/:id             controllers.api.EmailApi.getOfId(id: Int)

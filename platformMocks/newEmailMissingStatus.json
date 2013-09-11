@@ -5,14 +5,13 @@
     "contentType": "text/plain",
     "smtpMessageId": null,
     "smtpFrom": "root <root@reportingfromtheborderland.net>",
-    "smtpTo": null,
+    "smtpTo": "Christophe <cbramdit@reportingfromtheborderland.net>",
     "smtpCc": null,
     "smtpBcc": null,
     "smtpReplyTo": null,
     "smtpSender": null,
     "fromAccountId": null,
     "creationTimestamp": 1378885425,
-    "status": "DRAFT",
     "to": [
         "cbramdit@reportingfromtheborderland.net"
     ],
