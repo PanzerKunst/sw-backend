@@ -19,6 +19,7 @@ object Account {
         "id" -> user.id,
         "firstName" -> user.firstName,
         "lastName" -> user.lastName,
+        "username" -> user.username,
         "publicKey" -> user.publicKey
       )
     }
