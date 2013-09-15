@@ -9,6 +9,7 @@ import models.clientSide.ClientSideEmail
 import java.math.BigInteger
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException
 import javax.security.auth.login.AccountNotFoundException
+import play.Play
 
 object EmailDto {
   def get(filters: Option[Map[String, String]]): List[Email] = {
@@ -16,21 +17,12 @@ object EmailDto {
       implicit c =>
 
         val query = """
-          SELECT e.*,
-          `to`.address AS to_address,
-          cc.address AS cc_address,
-          bcc.address AS bcc_address,
-          r.references_email_id
-          FROM email e
-          LEFT JOIN `to` ON `to`.email_id = e.id
-          LEFT JOIN cc ON cc.email_id = e.id
-          LEFT JOIN bcc ON bcc.email_id = e.id
-          LEFT JOIN smtp_references r ON r.email_id = e.id """ + DbUtil.generateWhereClause(filters) + ";"
+          SELECT id, subject, body, content_type, smtp_message_id, smtp_from, smtp_to, smtp_cc, smtp_bcc, smtp_reply_to, smtp_sender, from_account_id, creation_timestamp, status
+          FROM email """ + DbUtil.generateWhereClause(filters) + ";"
 
         Logger.info("EmailDto.get():" + query)
 
         SQL(query)().map(row =>
-
           Email(
             id = row[BigInteger]("id").longValue(),
             subject = row[Option[String]]("subject"),
@@ -51,6 +43,75 @@ object EmailDto {
             status = row[String]("status")
           )
         ).toList
+    }
+  }
+
+  def getEmailsToAccount(username: String, statuses: List[String]): List[Email] = {
+    DB.withConnection {
+      implicit c =>
+
+        var statusesForQuery = "\"" + statuses.apply(0) + "\""
+        for (i <- 1 to statuses.length - 1) {
+          statusesForQuery += ", \"" + statuses.apply(i) + "\""
+        }
+
+        val queryToGetEmailIds = """
+          SELECT e.id,
+          `to`.address to_address,
+          cc.address cc_address,
+          bcc.address bcc_address
+            FROM email e
+          LEFT JOIN `to` ON `to`.email_id = e.id
+          LEFT JOIN cc ON cc.email_id = e.id
+          LEFT JOIN bcc ON bcc.email_id = e.id
+          WHERE (`to`.address = """" + username + "@" + Play.application().configuration().getString("email.domain") + """"
+            OR cc.address = """" + username + "@" + Play.application().configuration().getString("email.domain") + """"
+            OR bcc.address = """" + username + "@" + Play.application().configuration().getString("email.domain") + """")
+          and e.status IN(""" + statusesForQuery + """);"""
+
+        Logger.info("EmailDto.queryToGetEmailIds:" + queryToGetEmailIds)
+
+        val emailIds = SQL(queryToGetEmailIds)().map(row =>
+          row[BigInteger]("id").longValue()
+        ).toList
+
+        if (emailIds.isEmpty) {
+          List()
+        }
+        else {
+          var idsForQuery = emailIds.apply(0).toString
+          for (i <- 1 to emailIds.length - 1) {
+            idsForQuery += ", " + emailIds.apply(i)
+          }
+
+          val query = """
+          SELECT id, subject, body, content_type, smtp_message_id, smtp_from, smtp_to, smtp_cc, smtp_bcc, smtp_reply_to, smtp_sender, from_account_id, creation_timestamp, status
+          FROM email where id in (""" + idsForQuery + """);"""
+
+          Logger.info("EmailDto.query:" + query)
+
+          SQL(query)().map(row =>
+            Email(
+              id = row[BigInteger]("id").longValue(),
+              subject = row[Option[String]]("subject"),
+              body = row[Option[String]]("body"),
+              contentType = row[String]("content_type"),
+              smtpMessageId = row[String]("smtp_message_id"),
+              smtpFrom = row[String]("smtp_from"),
+              smtpTo = row[Option[String]]("smtp_to"),
+              smtpCc = row[Option[String]]("smtp_cc"),
+              smtpBcc = row[Option[String]]("smtp_bcc"),
+              smtpReplyTo = row[Option[String]]("smtp_reply_to"),
+              smtpSender = row[Option[String]]("smtp_sender"),
+              fromAccountId = row[Option[BigInteger]]("from_account_id") match {
+                case Some(fromAccountId) => Some(fromAccountId.longValue())
+                case None => None
+              },
+              creationTimestamp = row[Long]("creation_timestamp"),
+              status = row[String]("status")
+            )
+          ).toList
+        }
     }
   }
 

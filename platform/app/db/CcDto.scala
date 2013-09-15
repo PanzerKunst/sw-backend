@@ -6,6 +6,22 @@ import anorm._
 import play.api.Play.current
 
 object CcDto {
+  def get(filters: Option[Map[String, String]]): List[String] = {
+    DB.withConnection {
+      implicit c =>
+
+        val query = """
+          select address
+          from cc """ + DbUtil.generateWhereClause(filters) + ";"
+
+        Logger.info("CcDto.get():" + query)
+
+        SQL(query)().map(row =>
+          row[String]("address")
+        ).toList
+    }
+  }
+
   def create(emailId: Long, address: String): Option[Long] = {
     DB.withConnection {
       implicit c =>

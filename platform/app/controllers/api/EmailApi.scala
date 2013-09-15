@@ -7,6 +7,7 @@ import models.clientSide.ClientSideEmail
 import play.api.libs.json.Json
 import javax.security.auth.login.AccountNotFoundException
 import scala.Some
+import models.Email
 
 object EmailApi extends Controller {
   val HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY = 520
@@ -51,10 +52,59 @@ object EmailApi extends Controller {
       }
   }
 
+  def get = Action {
+    implicit request =>
+
+      try {
+        if (request.queryString.contains("accountId") && request.queryString.contains("status")) {
+          val accountId = request.queryString.get("accountId").get.head
+          val statuses = request.queryString.get("status").get.head.split(',').toList
+
+          val matchingEmails = if (statuses.length == 1 && statuses.head == Email.STATUS_SENT) {
+            val filters = Some(Map(
+              "from_account_id" -> accountId,
+              "status" -> Email.STATUS_SENT
+            ))
+
+            EmailDto.get(filters)
+          }
+          else if (!statuses.contains(Email.STATUS_SENT)){
+            val accountFilters = Some(Map("id" -> accountId))
+            val username = AccountDto.get(accountFilters).head.username
+
+            EmailDto.getEmailsToAccount(username, statuses)
+          }
+          else {
+            throw new IncorrectEmailRequestException()
+          }
+
+          if (matchingEmails.isEmpty)
+            NoContent
+          else {
+            val clientSideEmails = for (email <- matchingEmails) yield new ClientSideEmail(
+              email,
+              ToDto.get(Some(Map("email_id" -> email.id.toString))),
+              CcDto.get(Some(Map("email_id" -> email.id.toString))),
+              BccDto.get(Some(Map("email_id" -> email.id.toString))),
+              SmtpReferencesDto.get(Some(Map("email_id" -> email.id.toString)))
+            )
+            Ok(Json.toJson(clientSideEmails))
+          }
+        }
+        else {
+          throw new IncorrectEmailRequestException()
+        }
+      }
+      catch {
+        case iere: IncorrectEmailRequestException => Forbidden
+        case e: Exception => InternalServerError(e.getMessage)
+      }
+  }
+
   def getOfId(id: Int) = Action {
     implicit request =>
 
-      val filters = Some(Map("e.id" -> id.toString))
+      val filters = Some(Map("id" -> id.toString))
 
       val matchingEmails = EmailDto.get(filters)
 
@@ -63,12 +113,14 @@ object EmailApi extends Controller {
       else {
         val clientSideEmail = new ClientSideEmail(
           matchingEmails.head,
-          List(),
-          List(),
-          List(),
-          List()
+          ToDto.get(Some(Map("email_id" -> matchingEmails.head.id.toString))),
+          CcDto.get(Some(Map("email_id" -> matchingEmails.head.id.toString))),
+          BccDto.get(Some(Map("email_id" -> matchingEmails.head.id.toString))),
+          SmtpReferencesDto.get(Some(Map("email_id" -> matchingEmails.head.id.toString)))
         )
         Ok(Json.toJson(clientSideEmail))
       }
   }
 }
+
+class IncorrectEmailRequestException extends Exception
