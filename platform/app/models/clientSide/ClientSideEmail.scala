@@ -95,7 +95,19 @@ class ClientSideEmail {
   }
 
   def validate: Option[String] = {
-    if (this.status != Email.STATUS_DRAFT &&
+    if (this.contentType == null ||
+      this.smtpFrom == null ||
+      !this.fromAccountId.isDefined ||
+      this.creationTimestamp == 0.toLong ||
+      this.status == null ||
+      this.to == null ||
+      this.cc == null ||
+      this.bcc == null ||
+      this.smtpReferences == null) {
+
+      Some(ClientSideEmail.ERROR_MSG_MISSING_REQUIRED_FIELDS)
+    }
+    else if (this.status != Email.STATUS_DRAFT &&
       this.status != Email.STATUS_ARCHIVED &&
       this.status != Email.STATUS_READ &&
       this.status != Email.STATUS_SENT &&
@@ -113,6 +125,7 @@ class ClientSideEmail {
 }
 
 object ClientSideEmail {
+  val ERROR_MSG_MISSING_REQUIRED_FIELDS = "Some required fields are missing"
   val ERROR_MSG_TO_CC_BCC_ALL_EMPTY = "'to', 'cc' and 'bcc' cannot all be empty"
   val ERROR_MSG_INCORRECT_STATUS = "Incorrect status"
 

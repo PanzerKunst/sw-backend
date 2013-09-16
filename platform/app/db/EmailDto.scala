@@ -18,7 +18,8 @@ object EmailDto {
 
         val query = """
           SELECT id, subject, body, content_type, smtp_message_id, smtp_from, smtp_to, smtp_cc, smtp_bcc, smtp_reply_to, smtp_sender, from_account_id, creation_timestamp, status
-          FROM email """ + DbUtil.generateWhereClause(filters) + ";"
+          FROM email """ + DbUtil.generateWhereClause(filters) + """
+          order by creation_timestamp desc;"""
 
         Logger.info("EmailDto.get():" + query)
 
@@ -86,7 +87,8 @@ object EmailDto {
 
           val query = """
           SELECT id, subject, body, content_type, smtp_message_id, smtp_from, smtp_to, smtp_cc, smtp_bcc, smtp_reply_to, smtp_sender, from_account_id, creation_timestamp, status
-          FROM email where id in (""" + idsForQuery + """);"""
+          FROM email where id in (""" + idsForQuery + """)
+          order by creation_timestamp desc;"""
 
           Logger.info("EmailDto.query:" + query)
 

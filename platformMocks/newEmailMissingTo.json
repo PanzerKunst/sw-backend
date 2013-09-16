@@ -1,9 +1,7 @@
 {
-    "id": null,
 	"subject": null,
     "body": "Hello,\nWorld!",
     "contentType": "text/plain",
-    "smtpMessageId": null,
     "smtpFrom": "root <root@reportingfromtheborderland.net>",
     "smtpTo": "Christophe <cbramdit@reportingfromtheborderland.net>",
     "smtpCc": null,
@@ -12,10 +10,8 @@
     "smtpSender": null,
     "fromAccountId": 1,
     "creationTimestamp": 1378885425,
-    "status": "DRAFT",
-    "to": [
-        "cbramdit@reportingfromtheborderland.net"
-    ],
+    "status": "SENT",
+    "to": null,
     "cc": [],
     "bcc": [],
     "smtpReferences": []

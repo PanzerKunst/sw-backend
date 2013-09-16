@@ -8,11 +8,13 @@ import play.api.libs.json.Json
 import javax.security.auth.login.AccountNotFoundException
 import scala.Some
 import models.Email
+import play.Play
 
 object EmailApi extends Controller {
-  val HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY = 520
-  val HTTP_STATUS_ACCOUNT_NOT_FOUND = 521
-  val HTTP_STATUS_INCORRECT_STATUS = 522
+  val HTTP_STATUS_CODE_MISSING_REQUIRED_FIELDS = 520
+  val HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY = 521
+  val HTTP_STATUS_ACCOUNT_NOT_FOUND = 522
+  val HTTP_STATUS_INCORRECT_STATUS = 523
 
   def create = Action(parse.json) {
     implicit request =>
@@ -21,7 +23,9 @@ object EmailApi extends Controller {
 
       clientSideEmail.validate match {
         case Some(errorMsg) =>
-          if (errorMsg == ClientSideEmail.ERROR_MSG_TO_CC_BCC_ALL_EMPTY)
+          if (errorMsg == ClientSideEmail.ERROR_MSG_MISSING_REQUIRED_FIELDS)
+            Status(HTTP_STATUS_CODE_MISSING_REQUIRED_FIELDS)
+          else if (errorMsg == ClientSideEmail.ERROR_MSG_TO_CC_BCC_ALL_EMPTY)
             Status(HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY)
           else
             Status(HTTP_STATUS_INCORRECT_STATUS)
@@ -68,7 +72,7 @@ object EmailApi extends Controller {
 
             EmailDto.get(filters)
           }
-          else if (!statuses.contains(Email.STATUS_SENT)){
+          else if (!statuses.contains(Email.STATUS_SENT)) {
             val accountFilters = Some(Map("id" -> accountId))
             val username = AccountDto.get(accountFilters).head.username
 
@@ -104,21 +108,48 @@ object EmailApi extends Controller {
   def getOfId(id: Int) = Action {
     implicit request =>
 
-      val filters = Some(Map("id" -> id.toString))
+      if (request.queryString.contains("accountId")) {
+        val filters = Some(Map("id" -> id.toString))
 
-      val matchingEmails = EmailDto.get(filters)
+        val matchingEmails = EmailDto.get(filters)
 
-      if (matchingEmails.isEmpty)
-        NoContent
+        if (matchingEmails.isEmpty)
+          NoContent
+        else {
+          val matchingEmail = matchingEmails.head
+
+          val clientSideEmail = new ClientSideEmail(
+            matchingEmail,
+            ToDto.get(Some(Map("email_id" -> matchingEmail.id.toString))),
+            CcDto.get(Some(Map("email_id" -> matchingEmail.id.toString))),
+            BccDto.get(Some(Map("email_id" -> matchingEmail.id.toString))),
+            SmtpReferencesDto.get(Some(Map("email_id" -> matchingEmail.id.toString)))
+          )
+
+          val accountId = request.queryString.get("accountId").get.head.toLong
+          val account = AccountDto.get(Some(Map("id" -> accountId.toString))).head
+          val accountEmailAddress = account.username + "@" + Play.application().configuration().getString("email.domain")
+
+          // We shouldn't return emails unrelated to the account
+          val isAccountMatching = clientSideEmail.fromAccountId match {
+            case Some(fromAccountId) => fromAccountId == accountId
+            case None => false
+          }
+
+          if (isAccountMatching ||
+            clientSideEmail.to.contains(accountEmailAddress) ||
+            clientSideEmail.cc.contains(accountEmailAddress) ||
+            clientSideEmail.bcc.contains(accountEmailAddress)) {
+
+            Ok(Json.toJson(clientSideEmail))
+          }
+          else {
+            Forbidden
+          }
+        }
+      }
       else {
-        val clientSideEmail = new ClientSideEmail(
-          matchingEmails.head,
-          ToDto.get(Some(Map("email_id" -> matchingEmails.head.id.toString))),
-          CcDto.get(Some(Map("email_id" -> matchingEmails.head.id.toString))),
-          BccDto.get(Some(Map("email_id" -> matchingEmails.head.id.toString))),
-          SmtpReferencesDto.get(Some(Map("email_id" -> matchingEmails.head.id.toString)))
-        )
-        Ok(Json.toJson(clientSideEmail))
+        Forbidden
       }
   }
 }
