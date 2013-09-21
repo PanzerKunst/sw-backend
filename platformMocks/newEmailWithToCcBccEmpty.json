@@ -1,18 +1,18 @@
 {
 	"subject": null,
-    "body": "Hello,\nWorld!",
+    "textContent": "Hello,\nWorld!",
     "contentType": "text/plain",
-    "smtpFrom": "root <root@reportingfromtheborderland.net>",
-    "smtpTo": null,
-    "smtpCc": null,
-    "smtpBcc": null,
-    "smtpReplyTo": null,
-    "smtpSender": null,
+    "from": {
+        "email": "root@reportingfromtheborderland.net",
+        "name": "root"
+    },
+    "replyTo": [],
+    "sender": null,
     "fromAccountId": 1,
     "creationTimestamp": 1378885425,
-    "status": "SENT",
+    "status": "TO_SEND",
     "to": [],
     "cc": [],
     "bcc": [],
-    "smtpReferences": []
+    "references": []
 }

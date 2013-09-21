@@ -5,11 +5,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 
 case class Account(
                  @JsonDeserialize(contentAs = classOf[java.lang.Long])
-                 id: Option[Long] = None,
+                 id: Option[Long],
 
                  firstName: String,
                  lastName: String,
                  username: String,
+                 password: String,
                  publicKey: String)
 
 object Account {

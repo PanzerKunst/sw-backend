@@ -3,7 +3,7 @@ package controllers.api
 import services.JsonUtil
 import play.api.mvc.{Action, Controller}
 import db._
-import models.clientSide.ClientSideEmail
+import models.clientside.ClientSideEmail
 import play.api.libs.json.Json
 import javax.security.auth.login.AccountNotFoundException
 import scala.Some
@@ -15,6 +15,7 @@ object EmailApi extends Controller {
   val HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY = 521
   val HTTP_STATUS_ACCOUNT_NOT_FOUND = 522
   val HTTP_STATUS_INCORRECT_STATUS = 523
+  val HTTP_STATUS_INCORRECT_CONTENT_TYPE = 524
 
   def create = Action(parse.json) {
     implicit request =>
@@ -27,25 +28,27 @@ object EmailApi extends Controller {
             Status(HTTP_STATUS_CODE_MISSING_REQUIRED_FIELDS)
           else if (errorMsg == ClientSideEmail.ERROR_MSG_TO_CC_BCC_ALL_EMPTY)
             Status(HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY)
-          else
+          else if (errorMsg == ClientSideEmail.ERROR_MSG_INCORRECT_STATUS)
             Status(HTTP_STATUS_INCORRECT_STATUS)
+          else
+            Status(HTTP_STATUS_INCORRECT_CONTENT_TYPE)
         case None =>
           try {
             EmailDto.create(clientSideEmail) match {
               case Some(id) =>
-                for (address <- clientSideEmail.to)
-                  ToDto.create(id, address)
+                for (internetAddress <- clientSideEmail.to)
+                  ToDto.create(id, internetAddress)
 
-                for (address <- clientSideEmail.cc)
-                  CcDto.create(id, address)
+                for (internetAddress <- clientSideEmail.cc)
+                  CcDto.create(id, internetAddress)
 
-                for (address <- clientSideEmail.bcc)
-                  BccDto.create(id, address)
+                for (internetAddress <- clientSideEmail.bcc)
+                  BccDto.create(id, internetAddress)
 
-                for (emailId <- clientSideEmail.smtpReferences)
-                  SmtpReferencesDto.create(id, emailId)
+                for (messageId <- clientSideEmail.references)
+                  ReferencesDto.create(id, messageId)
 
-                Ok(id.toString)
+                Created(id.toString)
               case None => InternalServerError("Creation of an email did not return an ID!")
             }
           }
@@ -90,7 +93,8 @@ object EmailApi extends Controller {
               ToDto.get(Some(Map("email_id" -> email.id.toString))),
               CcDto.get(Some(Map("email_id" -> email.id.toString))),
               BccDto.get(Some(Map("email_id" -> email.id.toString))),
-              SmtpReferencesDto.get(Some(Map("email_id" -> email.id.toString)))
+              ReplyToDto.get(Some(Map("email_id" -> email.id.toString))),
+              ReferencesDto.get(Some(Map("email_id" -> email.id.toString)))
             )
             Ok(Json.toJson(clientSideEmails))
           }
@@ -123,7 +127,8 @@ object EmailApi extends Controller {
             ToDto.get(Some(Map("email_id" -> matchingEmail.id.toString))),
             CcDto.get(Some(Map("email_id" -> matchingEmail.id.toString))),
             BccDto.get(Some(Map("email_id" -> matchingEmail.id.toString))),
-            SmtpReferencesDto.get(Some(Map("email_id" -> matchingEmail.id.toString)))
+            ReplyToDto.get(Some(Map("email_id" -> matchingEmail.id.toString))),
+            ReferencesDto.get(Some(Map("email_id" -> matchingEmail.id.toString)))
           )
 
           val accountId = request.queryString.get("accountId").get.head.toLong

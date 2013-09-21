@@ -5,17 +5,14 @@ import util.Random
 import play.Play
 
 case class Email(id: Long,
-                 subject: Option[String] = None,
-                 body: Option[String] = None,
+                 subject: Option[String],
+                 textContent: Option[String],
+                 htmlContent: Option[String],
                  contentType: String,
-                 smtpMessageId: String,
-                 smtpFrom: String,
-                 smtpTo: Option[String] = None,
-                 smtpCc: Option[String] = None,
-                 smtpBcc: Option[String] = None,
-                 smtpReplyTo: Option[String] = None,
-                 smtpSender: Option[String] = None,
-                 fromAccountId: Option[Long] = None,
+                 messageId: String,
+                 from: InternetAddress,
+                 sender: Option[InternetAddress],
+                 fromAccountId: Option[Long],
                  creationTimestamp: Long,
                  status: String)
 
@@ -23,13 +20,17 @@ case class Email(id: Long,
 object Email {
 
   // Format: timestamp.rand@domain
-  def generateSmtpMessageId(): String = {
+  def generateMessageId(): String = {
     new Date().getTime + "." + new Random().nextInt() + "@" + Play.application().configuration().getString("email.domain")
   }
 
   val STATUS_DRAFT = "DRAFT"
+  val STATUS_TO_SEND = "TO_SEND"
   val STATUS_SENT = "SENT"
   val STATUS_UNREAD = "UNREAD"
   val STATUS_READ = "READ"
   val STATUS_ARCHIVED = "ARCHIVED"
+
+  val CONTENT_TYPE_TEXT = "text/plain"
+  val CONTENT_TYPE_HTML_WITH_TEXT_FALLBACK__PREFIX = "multipart/alternative"
 }

@@ -3,7 +3,7 @@ package controllers.api
 import models.Account
 import services.JsonUtil
 import play.api.mvc.{Action, Controller}
-import db.AccountDto
+import db.{PostfixAccountDto, AccountDto}
 import play.api.libs.json.Json
 
 object AccountApi extends Controller {
@@ -15,7 +15,9 @@ object AccountApi extends Controller {
       val account = JsonUtil.deserialize[Account](request.body.toString())
       try {
         AccountDto.create(account) match {
-          case Some(id) => Ok(id.toString)
+          case Some(id) =>
+            PostfixAccountDto.create(account, id)
+            Created(id.toString)
           case None => InternalServerError("Creation of an account did not return an ID!")
         }
       }

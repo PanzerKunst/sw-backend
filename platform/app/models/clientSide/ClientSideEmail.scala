@@ -1,6 +1,6 @@
-package models.clientSide
+package models.clientside
 
-import models.Email
+import models.{InternetAddress, Email}
 import org.codehaus.jackson.annotate.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import play.api.libs.json.{Json, JsValue, Writes}
@@ -14,31 +14,22 @@ class ClientSideEmail {
   var subject: Option[String] = None
 
   @JsonProperty
-  var body: Option[String] = None
+  var textContent: Option[String] = None
+
+  @JsonProperty
+  var htmlContent: Option[String] = None
 
   @JsonProperty
   var contentType: String = _
 
   @JsonProperty
-  var smtpMessageId: Option[String] = None
+  var messageId: Option[String] = None
 
   @JsonProperty
-  var smtpFrom: String = _
+  var from: InternetAddress = _
 
   @JsonProperty
-  var smtpTo: Option[String] = None
-
-  @JsonProperty
-  var smtpCc: Option[String] = None
-
-  @JsonProperty
-  var smtpBcc: Option[String] = None
-
-  @JsonProperty
-  var smtpReplyTo: Option[String] = None
-
-  @JsonProperty
-  var smtpSender: Option[String] = None
+  var sender: Option[InternetAddress] = None
 
   @JsonProperty
   @JsonDeserialize(contentAs = classOf[java.lang.Long])
@@ -53,36 +44,36 @@ class ClientSideEmail {
 
 
   @JsonProperty
-  var to: List[String] = List()
+  var to: List[InternetAddress] = List()
 
   @JsonProperty
-  var cc: List[String] = List()
+  var cc: List[InternetAddress] = List()
 
   @JsonProperty
-  var bcc: List[String] = List()
+  var bcc: List[InternetAddress] = List()
 
   @JsonProperty
-  @JsonDeserialize(contentAs = classOf[java.lang.Long])
-  var smtpReferences: List[Long] = List()
+  var replyTo: List[InternetAddress] = List()
+
+  @JsonProperty
+  var references: List[String] = List()
 
   def this(email: Email,
-           _to: List[String],
-           _cc: List[String],
-           _bcc: List[String],
-           _smtpReferences: List[Long]) = {
+           _to: List[InternetAddress],
+           _cc: List[InternetAddress],
+           _bcc: List[InternetAddress],
+           _replyTo: List[InternetAddress],
+           _references: List[String]) = {
     this()
 
     this.id = Some(email.id)
     this.subject = email.subject
-    this.body = email.body
+    this.textContent = email.textContent
+    this.htmlContent = email.htmlContent
     this.contentType = email.contentType
-    this.smtpMessageId = Some(email.smtpMessageId)
-    this.smtpFrom = email.smtpFrom
-    this.smtpTo = email.smtpTo
-    this.smtpCc = email.smtpCc
-    this.smtpBcc = email.smtpBcc
-    this.smtpReplyTo = email.smtpReplyTo
-    this.smtpSender = email.smtpSender
+    this.messageId = Some(email.messageId)
+    this.from = email.from
+    this.sender = email.sender
     this.fromAccountId = email.fromAccountId
     this.creationTimestamp = email.creationTimestamp
     this.status = email.status
@@ -91,29 +82,33 @@ class ClientSideEmail {
     this.to = _to
     this.cc = _cc
     this.bcc = _bcc
-    this.smtpReferences = _smtpReferences
+    this.replyTo = _replyTo
+    this.references = _references
   }
 
   def validate: Option[String] = {
     if (this.contentType == null ||
-      this.smtpFrom == null ||
+      this.from == null ||
+      this.replyTo == null ||
       !this.fromAccountId.isDefined ||
       this.creationTimestamp == 0.toLong ||
       this.status == null ||
       this.to == null ||
       this.cc == null ||
       this.bcc == null ||
-      this.smtpReferences == null) {
+      this.references == null) {
 
       Some(ClientSideEmail.ERROR_MSG_MISSING_REQUIRED_FIELDS)
     }
     else if (this.status != Email.STATUS_DRAFT &&
-      this.status != Email.STATUS_ARCHIVED &&
-      this.status != Email.STATUS_READ &&
-      this.status != Email.STATUS_SENT &&
-      this.status != Email.STATUS_UNREAD) {
+      this.status != Email.STATUS_TO_SEND) {
 
       Some(ClientSideEmail.ERROR_MSG_INCORRECT_STATUS)
+    }
+    else if (this.contentType != Email.CONTENT_TYPE_TEXT &&
+      this.contentType != Email.CONTENT_TYPE_HTML_WITH_TEXT_FALLBACK__PREFIX) {
+
+      Some(ClientSideEmail.ERROR_MSG_INCORRECT_CONTENT_TYPE)
     }
     else if (this.to.length == 0 && this.cc.length == 0 && this.bcc.length == 0) {
       Some(ClientSideEmail.ERROR_MSG_TO_CC_BCC_ALL_EMPTY)
@@ -128,28 +123,27 @@ object ClientSideEmail {
   val ERROR_MSG_MISSING_REQUIRED_FIELDS = "Some required fields are missing"
   val ERROR_MSG_TO_CC_BCC_ALL_EMPTY = "'to', 'cc' and 'bcc' cannot all be empty"
   val ERROR_MSG_INCORRECT_STATUS = "Incorrect status"
+  val ERROR_MSG_INCORRECT_CONTENT_TYPE = "Incorrect content type"
 
   implicit val writes = new Writes[ClientSideEmail] {
     def writes(email: ClientSideEmail): JsValue = {
       Json.obj(
         "id" -> email.id,
         "subject" -> email.subject,
-        "body" -> email.body,
+        "textContent" -> email.textContent,
+        "htmlContent" -> email.htmlContent,
         "contentType" -> email.contentType,
-        "smtpMessageId" -> email.smtpMessageId,
-        "smtpFrom" -> email.smtpFrom,
-        "smtpTo" -> email.smtpTo,
-        "smtpCc" -> email.smtpCc,
-        "smtpBcc" -> email.smtpBcc,
-        "smtpReplyTo" -> email.smtpReplyTo,
-        "smtpSender" -> email.smtpSender,
+        "messageId" -> email.messageId,
+        "from" -> email.from,
+        "replyTo" -> email.replyTo,
+        "sender" -> email.sender,
         "fromAccountId" -> email.fromAccountId,
         "creationTimestamp" -> email.creationTimestamp,
         "status" -> email.status,
         "to" -> email.to,
         "cc" -> email.cc,
         "bcc" -> email.bcc,
-        "smtpReferences" -> email.smtpReferences
+        "references" -> email.references
       )
     }
   }

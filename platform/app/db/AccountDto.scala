@@ -27,6 +27,7 @@ object AccountDto {
             firstName = row[String]("first_name"),
             lastName = row[String]("last_name"),
             username = row[String]("username"),
+            password = null,
             publicKey = row[String]("public_key")
           )
         ).toList
@@ -38,11 +39,12 @@ object AccountDto {
       implicit c =>
 
         val query = """
-                       insert into account(first_name, last_name, username, public_key)
+          insert into account(first_name, last_name, username, password, public_key)
           values("""" + DbUtil.backslashQuotes(account.firstName) + """",
-          """" + DbUtil.backslashQuotes(account.lastName) + """",
-          """" + DbUtil.backslashQuotes(account.username) + """",
-          {publicKey});"""
+            """" + DbUtil.backslashQuotes(account.lastName) + """",
+            """" + DbUtil.backslashQuotes(account.username) + """",
+            """" + DbUtil.backslashQuotes(account.password) + """",
+            {publicKey});"""
 
         Logger.info("AccountDto.create():" + query)
 
@@ -62,19 +64,21 @@ object AccountDto {
     }
   }
 
-  def update(user: Account) {
+  def update(account: Account) {
     DB.withConnection {
       implicit c =>
 
         val query = """
-                       update account set
-          first_name = """" + DbUtil.backslashQuotes(user.firstName) + """",
-          last_name = """" + DbUtil.backslashQuotes(user.lastName) + """",
-          public_key = """" + DbUtil.backslashQuotes(user.publicKey) + """";"""
+          update account set
+          first_name = """" + DbUtil.backslashQuotes(account.firstName) + """",
+          last_name = """" + DbUtil.backslashQuotes(account.lastName) + """",
+          password = """" + DbUtil.backslashQuotes(account.password) + """",
+          public_key = {publicKey}
+          where id = """ + account.id + """;"""
 
         Logger.info("AccountDto.update():" + query)
 
-        SQL(query).executeUpdate()
+        SQL(query).on("publicKey" -> account.publicKey).executeUpdate()
     }
   }
 }

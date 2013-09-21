@@ -1,0 +1,30 @@
+$ sudo vi /etc/hostname
+platform.reportingfromtheborderland.net
+
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ reboot
+
+
+Check address in "ifconfig", and update /etc/hosts accordingly:
+
+$ sudo vi /etc/hosts
+172.31.38.234 platform.reportingfromtheborderland.net platform
+
+$ sudo apt-get install mysql-client mysql-server
+
+
+Allow access from other SW servers (0.0.0.0 for anywhere):
+
+$ sudo vi /etc/mysql/my.cnf
+
+bind-address = 0.0.0.0
+
+$ sudo service mysql restart
+
+
+Allow access from outside on the database (% for anywhere):
+
+$ mysql -u root -p
+$ grant all privileges on steelwrapped.* to 'root'@'%' identified by '34ig1su4';
+$ flush privileges;

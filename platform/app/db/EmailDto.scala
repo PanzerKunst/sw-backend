@@ -1,11 +1,11 @@
 package db
 
 import anorm._
-import models.Email
+import models.{InternetAddress, Email}
 import play.api.db.DB
 import play.api.Play.current
 import play.api.Logger
-import models.clientSide.ClientSideEmail
+import models.clientside.ClientSideEmail
 import java.math.BigInteger
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException
 import javax.security.auth.login.AccountNotFoundException
@@ -17,7 +17,7 @@ object EmailDto {
       implicit c =>
 
         val query = """
-          SELECT id, subject, body, content_type, smtp_message_id, smtp_from, smtp_to, smtp_cc, smtp_bcc, smtp_reply_to, smtp_sender, from_account_id, creation_timestamp, status
+          SELECT id, subject, textContent, htmlContent, content_type, message_id, from_address, from_name, sender_address, sender_name, from_account_id, creation_timestamp, status
           FROM email """ + DbUtil.generateWhereClause(filters) + """
           order by creation_timestamp desc;"""
 
@@ -27,15 +27,21 @@ object EmailDto {
           Email(
             id = row[BigInteger]("id").longValue(),
             subject = row[Option[String]]("subject"),
-            body = row[Option[String]]("body"),
+            textContent = row[Option[String]]("textContent"),
+            htmlContent = row[Option[String]]("htmlContent"),
             contentType = row[String]("content_type"),
-            smtpMessageId = row[String]("smtp_message_id"),
-            smtpFrom = row[String]("smtp_from"),
-            smtpTo = row[Option[String]]("smtp_to"),
-            smtpCc = row[Option[String]]("smtp_cc"),
-            smtpBcc = row[Option[String]]("smtp_bcc"),
-            smtpReplyTo = row[Option[String]]("smtp_reply_to"),
-            smtpSender = row[Option[String]]("smtp_sender"),
+            messageId = row[String]("message_id"),
+            from = InternetAddress(
+              email = row[String]("from_address"),
+              name = row[Option[String]]("from_name")
+            ),
+            sender = row[Option[String]]("sender_address") match {
+              case Some(address) => Some(InternetAddress(
+                email = address,
+                name = row[Option[String]]("sender_name")
+              ))
+              case None => None
+            },
             fromAccountId = row[Option[BigInteger]]("from_account_id") match {
               case Some(fromAccountId) => Some(fromAccountId.longValue())
               case None => None
@@ -70,7 +76,7 @@ object EmailDto {
             OR bcc.address = """" + username + "@" + Play.application().configuration().getString("email.domain") + """")
           and e.status IN(""" + statusesForQuery + """);"""
 
-        Logger.info("EmailDto.queryToGetEmailIds:" + queryToGetEmailIds)
+        Logger.info("EmailDto.getEmailsToAccount().queryToGetEmailIds:" + queryToGetEmailIds)
 
         val emailIds = SQL(queryToGetEmailIds)().map(row =>
           row[BigInteger]("id").longValue()
@@ -86,25 +92,31 @@ object EmailDto {
           }
 
           val query = """
-          SELECT id, subject, body, content_type, smtp_message_id, smtp_from, smtp_to, smtp_cc, smtp_bcc, smtp_reply_to, smtp_sender, from_account_id, creation_timestamp, status
+          SELECT id, subject, textContent, htmlContent, content_type, message_id, from_address, from_name, sender_address, sender_name, from_account_id, creation_timestamp, status
           FROM email where id in (""" + idsForQuery + """)
           order by creation_timestamp desc;"""
 
-          Logger.info("EmailDto.query:" + query)
+          Logger.info("EmailDto.getEmailsToAccount().query:" + query)
 
           SQL(query)().map(row =>
             Email(
               id = row[BigInteger]("id").longValue(),
               subject = row[Option[String]]("subject"),
-              body = row[Option[String]]("body"),
+              textContent = row[Option[String]]("textContent"),
+              htmlContent = row[Option[String]]("htmlContent"),
               contentType = row[String]("content_type"),
-              smtpMessageId = row[String]("smtp_message_id"),
-              smtpFrom = row[String]("smtp_from"),
-              smtpTo = row[Option[String]]("smtp_to"),
-              smtpCc = row[Option[String]]("smtp_cc"),
-              smtpBcc = row[Option[String]]("smtp_bcc"),
-              smtpReplyTo = row[Option[String]]("smtp_reply_to"),
-              smtpSender = row[Option[String]]("smtp_sender"),
+              messageId = row[String]("message_id"),
+              from = InternetAddress(
+                email = row[String]("from_address"),
+                name = row[Option[String]]("from_name")
+              ),
+              sender = row[Option[String]]("sender_address") match {
+                case Some(address) => Some(InternetAddress(
+                  email = address,
+                  name = row[Option[String]]("sender_name")
+                ))
+                case None => None
+              },
               fromAccountId = row[Option[BigInteger]]("from_account_id") match {
                 case Some(fromAccountId) => Some(fromAccountId.longValue())
                 case None => None
@@ -125,42 +137,41 @@ object EmailDto {
         if (email.subject.isDefined && email.subject.get != "")
           subjectForQuery = "\"" + DbUtil.backslashQuotes(email.subject.get) + "\""
 
-        var bodyForQuery = "NULL"
-        if (email.body.isDefined && email.body.get != "")
-          bodyForQuery = email.body.get
+        var textContentForQuery = "NULL"
+        if (email.textContent.isDefined && email.textContent.get != "")
+          textContentForQuery = email.textContent.get
 
-        var smtpToForQuery = "NULL"
-        if (email.smtpTo.isDefined && email.smtpTo.get != "")
-          smtpToForQuery = "\"" + DbUtil.backslashQuotes(email.smtpTo.get) + "\""
+        var htmlContentForQuery = "NULL"
+        if (email.htmlContent.isDefined && email.htmlContent.get != "")
+          htmlContentForQuery = email.htmlContent.get
 
-        var smtpCcForQuery = "NULL"
-        if (email.smtpCc.isDefined && email.smtpCc.get != "")
-          smtpCcForQuery = "\"" + DbUtil.backslashQuotes(email.smtpCc.get) + "\""
+        var fromNameForQuery = "NULL"
+        if (email.from.name.isDefined && email.from.name.get != "")
+          fromNameForQuery = "\"" + DbUtil.backslashQuotes(email.from.name.get) + "\""
 
-        var smtpBccForQuery = "NULL"
-        if (email.smtpBcc.isDefined && email.smtpBcc.get != "")
-          smtpBccForQuery = "\"" + DbUtil.backslashQuotes(email.smtpBcc.get) + "\""
+        var senderAddressForQuery = "NULL"
+        var senderNameForQuery = "NULL"
+        if (email.sender.isDefined) {
+          val sender = email.sender.get
+          senderAddressForQuery = "\"" + DbUtil.backslashQuotes(sender.email) + "\""
 
-        var smtpReplyToForQuery = "NULL"
-        if (email.smtpReplyTo.isDefined && email.smtpReplyTo.get != "")
-          smtpReplyToForQuery = "\"" + DbUtil.backslashQuotes(email.smtpReplyTo.get) + "\""
+          if (sender.name.isDefined) {
+            senderNameForQuery = "\"" + DbUtil.backslashQuotes(sender.name.get) + "\""
+          }
+        }
 
-        var smtpSenderForQuery = "NULL"
-        if (email.smtpSender.isDefined && email.smtpSender.get != "")
-          smtpSenderForQuery = "\"" + DbUtil.backslashQuotes(email.smtpSender.get) + "\""
 
         val query = """
-                       insert into email(subject, body, content_type, smtp_message_id, smtp_from, smtp_to, smtp_cc, smtp_bcc, smtp_reply_to, smtp_sender, from_account_id, creation_timestamp, status)
+                       insert into email(subject, textContent, htmlContent, content_type, message_id, from_address, from_name, sender_address, sender_name, from_account_id, creation_timestamp, status)
           values(""" + subjectForQuery + """,
-          {body},
+          {textContent},
+          {htmlContent},
           """" + email.contentType + """",
-          """" + Email.generateSmtpMessageId() + """",
-          """" + email.smtpFrom + """",
-          """ + smtpToForQuery + """,
-          """ + smtpCcForQuery + """,
-          """ + smtpBccForQuery + """,
-          """ + smtpReplyToForQuery + """,
-          """ + smtpSenderForQuery + """,
+          """" + Email.generateMessageId() + """",
+          """" + email.from.email + """",
+          """ + fromNameForQuery + """,
+          """ + senderAddressForQuery + """,
+          """ + senderNameForQuery + """,
           """ + email.fromAccountId.getOrElse("NULL") + """,
           """ + email.creationTimestamp + """,
           """" + email.status + """");"""
@@ -168,9 +179,11 @@ object EmailDto {
         Logger.info("EmailDto.create():" + query)
 
         try {
-          // We need to use "on" otherwise the new lines inside the "bodyForQuery" are removed
-          SQL(query).on("body" -> bodyForQuery)
-            .executeInsert()
+          // We need to use "on" otherwise the new lines inside the "textContentForQuery" and "htmlContentForQuery" are removed
+          SQL(query).on(
+            "textContent" -> textContentForQuery,
+            "htmlContent" -> htmlContentForQuery
+          ).executeInsert()
         }
         catch {
           case msicve: MySQLIntegrityConstraintViolationException =>

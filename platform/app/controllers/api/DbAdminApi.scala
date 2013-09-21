@@ -12,7 +12,7 @@ object DbAdminApi extends Controller {
         request.queryString.get("key").get.head == Play.application().configuration().getString("application.secret")) {
         DbAdmin.createTables()
         DbAdmin.initData()
-        Ok
+        Created
       }
       else
         Forbidden

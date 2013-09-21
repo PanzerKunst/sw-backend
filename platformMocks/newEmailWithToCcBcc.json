@@ -1,25 +1,29 @@
 {
 	"subject": null,
-    "body": "Hello,\nWorld!",
+    "textContent": "Hello,\nWorld!",
     "contentType": "text/plain",
-    "smtpFrom": "root <root@reportingfromtheborderland.net>",
-    "smtpTo": "Christophe <blackbird@reportingfromtheborderland.net>, Gamma",
-    "smtpCc": "Alpha <alpha@reportingfromtheborderland.net>",
-    "smtpBcc": "beta@reportingfromtheborderland.net",
-    "smtpReplyTo": null,
-    "smtpSender": null,
+    "from": {
+        "email": "root@reportingfromtheborderland.net",
+        "name": "root"
+    },
+    "replyTo": [],
+    "sender": null,
     "fromAccountId": 1,
     "creationTimestamp": 1378885425,
-    "status": "SENT",
-    "to": [
-        "blackbird@reportingfromtheborderland.net",
-        "gamma@reportingfromtheborderland.net"
-    ],
-    "cc": [
-        "alpha@reportingfromtheborderland.net"
-    ],
-    "bcc": [
-        "beta@reportingfromtheborderland.net"
-    ],
-    "smtpReferences": []
+    "status": "TO_SEND",
+    "to": [{
+        "email": "blackbird@reportingfromtheborderland.net",
+        "name": "Christophe"
+    },{
+        "email": "gamma@reportingfromtheborderland.net",
+        "name": "Gamma"
+    }],
+    "cc": [{
+        "email": "alpha@reportingfromtheborderland.net",
+        "name": "Alpha"
+    }],
+    "bcc": [{
+        "email": "beta@reportingfromtheborderland.net"
+    }],
+    "references": []
 }

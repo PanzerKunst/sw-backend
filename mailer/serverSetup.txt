@@ -1,0 +1,304 @@
+Make sure that there is an MX DNS record for "reportingfromtheborderland.net" pointing to "mailer.reportingfromtheborderland.net"
+
+$ sudo vi /etc/hostname
+mailer.reportingfromtheborderland.net
+
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ reboot
+
+Check address in "ifconfig"
+
+$ sudo vi /etc/hosts
+172.31.38.234 mailer.reportingfromtheborderland.net mailer #address from “ifconfig”
+
+$ sudo apt-get install mysql-client mysql-server
+$ sudo vi postfixadmin-mysql.sql
+Paste contents
+$ mysql -u root -p < postfixadmin-mysql.sql
+
+$ sudo vi /etc/mysql/my.cnf
+For better logging, remove comment before those 2 declarations:
+general_log_file
+general_log
+
+$ sudo service mysql restart
+
+$ sudo apt-get install postfix postfix-mysql
+
+Check that file /etc/mailname has correct contents
+
+$ sudo vi /etc/postfix/main.cf
+
+Make sure that:
+myorigin = $mydomain
+
+# As we will be using virtual domains, this needs to be empty:
+mydestination =
+
+# We don't want outgoing mail to come from username@mailer.reportingfromtheborderland.net, but from username@reportingfromtheborderland.net
+masquerade_domains = mailer.reportingfromtheborderland.net
+
+# As we will be using virtual domains, this needs to be empty
+local_recipient_maps =
+
+
+Restrictions:
+
+# Requirements for the HELO statement
+smtpd_helo_restrictions = permit_mynetworks, warn_if_reject reject_non_fqdn_hostname, reject_invalid_hostname, permit
+# Requirements for the sender details
+smtpd_sender_restrictions = permit_mynetworks, warn_if_reject reject_non_fqdn_sender, reject_unknown_sender_domain, reject_unauth_pipelining, permit
+# Requirements for the connecting server
+smtpd_client_restrictions = reject_rbl_client sbl.spamhaus.org, reject_rbl_client blackholes.easynet.nl
+# Requirement for the recipient address
+smtpd_recipient_restrictions = reject_unauth_pipelining, permit_mynetworks, reject_non_fqdn_recipient, reject_unknown_recipient_domain, reject_unauth_destination, permit
+# Block clients that speak too early
+smtpd_data_restrictions = reject_unauth_pipelining
+
+
+Create virtual alias maps
+
+$ sudo vi /etc/postfix/mysql_virtual_alias_maps.cf
+
+Paste the following:
+
+user = postfix
+password = 34ig1su4
+hosts = 127.0.0.1
+dbname = postfix
+table = alias
+select_field = goto
+where_field = address
+
+$ sudo vi /etc/postfix/mysql_virtual_domains_maps.cf
+
+Paste:
+
+user = postfix
+password = 34ig1su4
+hosts = 127.0.0.1
+dbname = postfix
+table = domain
+select_field = domain
+where_field = domain
+additional_conditions = and backupmx = '0' and active = '1'
+
+$ sudo vi /etc/postfix/mysql_virtual_mailbox_maps.cf
+
+user = postfix
+password = 34ig1su4
+hosts = 127.0.0.1
+dbname = postfix
+table = mailbox
+select_field = maildir
+where_field = username
+additional_conditions = and active = '1'
+
+$ sudo vi /etc/postfix/mysql_virtual_mailbox_limit_maps.cf
+
+user = postfix
+password = 34ig1su4
+hosts = 127.0.0.1
+dbname = postfix
+table = mailbox
+select_field = quota
+where_field = username
+additional_conditions = and active = '1'
+
+$ sudo vi /etc/postfix/mysql_relay_domains_maps.cf
+
+user = postfix
+password = 34ig1su4
+hosts = 127.0.0.1
+dbname = postfix
+table = domain
+select_field = domain
+where_field = domain
+additional_conditions = and backupmx = '1'
+
+To set the group of these files to postfix:
+$ sudo chgrp postfix /etc/postfix/mysql_*.cf
+
+To make the file readable by the group:
+$ sudo chmod 640 /etc/postfix/mysql_*.cf
+
+
+Create a virtual user to handle all mail
+
+$ sudo groupadd -g 5000 vmail
+$ sudo useradd -m -g vmail -u 5000 -d /mnt/vmail -s /bin/bash vmail
+
+
+Configuring Postfix with MySQL maps
+
+$ sudo vi /etc/postfix/main.cf
+
+Then add the following code segment to main.cf:
+
+# Virtual Mailbox Domain Settings
+virtual_alias_maps = mysql:/etc/postfix/mysql_virtual_alias_maps.cf
+virtual_mailbox_domains = mysql:/etc/postfix/mysql_virtual_domains_maps.cf
+virtual_mailbox_maps = mysql:/etc/postfix/mysql_virtual_mailbox_maps.cf
+virtual_mailbox_limit = 51200000
+virtual_minimum_uid = 5000
+virtual_uid_maps = static:5000
+virtual_gid_maps = static:5000
+virtual_mailbox_base = /mnt/vmail
+virtual_transport = virtual
+
+
+Set up SASL, otherwise the default Postfix config will prevent email relay to 3rd party domains (cf. "smtpd_relay_restrictions" in main.cf)
+
+$ sudo apt-get install libsasl2-modules libsasl2-modules-sql sasl2-bin libpam-mysql
+
+Add user "postfix" to group "sasl":
+$ sudo adduser postfix sasl
+
+Create sasl files accessibly even by chrooted Postfix:
+$ sudo mkdir -p /var/spool/postfix/var/run/saslauthd
+
+Create one symbolic link (because Postfix on Debian is running from a chrooted environment and other applications you maybe using on your server (including testsaslauthd for testing if saslauthd is working correctly) are not aware of us changing the saslauthd directory)
+$ sudo rm -rf /var/run/saslauthd
+$ sudo ln -s /var/spool/postfix/var/run/saslauthd /var/run/saslauthd
+
+Add SASL configurations to Postfix:
+$ sudo vi /etc/postfix/main.cf
+
+Add the following lines:
+
+# SASL
+smtpd_sasl_auth_enable = yes
+# If your potential clients use Outlook Express or other older clients
+# this needs to be set to yes
+broken_sasl_auth_clients = no
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_local_domain =
+
+
+Add Modify "permit_sasl_authenticated" to "smtpd_sender_restrictions" and "smtpd_recipient_restrictions":
+
+smtpd_sender_restrictions = permit_sasl_authenticated, permit_mynetworks, warn_if_reject reject_non_fqdn_sender, reject_unknown_sender_domain, reject_unauth_pipelining, permit
+smtpd_recipient_restrictions = reject_unauth_pipelining, permit_mynetworks, permit_sasl_authenticated, reject_non_fqdn_recipient, reject_unknown_recipient_domain, reject_unauth_destination, permit
+
+Change how SASLAUTHD is run:
+$ sudo vi /etc/default/saslauthd
+
+START=yes
+# Switch this to be under postfix's spool
+# And add -r so that the realm(domain) is part of the username
+OPTIONS="-r -c -m /var/spool/postfix/var/run/saslauthd"
+
+
+Tell postfix how to interact with SASL: 
+
+$ sudo vi /etc/postfix/sasl/smtpd.conf
+
+Enter the following:
+pwcheck_method: saslauthd
+mech_list: plain login cram-md5 digest-md5
+log_level: 7
+allow_plaintext: true
+auxprop_plugin: sql
+sql_engine: mysql
+sql_hostnames: 127.0.0.1
+sql_user: postfix
+sql_passwd: 34ig1su4
+sql_database: postfix
+sql_select: select password from mailbox where username='%u' and domain='%r' and active = 1
+
+
+Tell the pam how to to authenticate smtp via mysql:
+
+$ sudo vi /etc/pam.d/smtp
+
+auth required pam_mysql.so user=postfix passwd=34ig1su4 host=127.0.0.1 db=postfix table=mailbox usercolumn=username passwdcolumn=password crypt=1
+account sufficient pam_mysql.so user=postfix passwd=34ig1su4 host=127.0.0.1 db=postfix table=mailbox usercolumn=username passwdcolumn=password crypt=1
+
+
+Restart postfix and saslauthd to enable SASL for sending emails:
+$ sudo service saslauthd restart
+$ sudo service postfix restart
+
+
+Allow access from other SW servers (0.0.0.0 for anywhere):
+
+$ sudo vi /etc/mysql/my.cnf
+
+bind-address = 0.0.0.0
+
+$ sudo service mysql restart
+
+Allow access from outside on the database (% for anywhere):
+
+$ mysql -u root -p
+$ grant all privileges on postfix.* to 'postfixadmin'@'%' identified by '34ig1su4';
+$ grant all privileges on postfix.* to 'postfix'@'%' identified by '34ig1su4';
+$ flush privileges;
+
+
+##########
+# Optional
+##########
+
+
+
+Setting up Courier IMAP
+
+$ sudo apt-get install courier-authlib-mysql courier-imap courier-imap-ssl
+
+$ sudo vi /etc/courier/authdaemonrc
+
+Change to mysql mode:
+authmodulelist="authmysql"
+
+Further down enable logging:
+DEBUG_LOGIN=2
+
+$ sudo vi /etc/courier/authmysqlrc
+
+MYSQL_SERVER 127.0.0.1
+MYSQL_USERNAME postfix
+MYSQL_PASSWORD 34ig1su4
+MYSQL_DATABASE postfix
+MYSQL_USER_TABLE mailbox
+MYSQL_CRYPT_PWFIELD password
+MYSQL_MAILDIR_FIELD concat('/mnt/vmail/',maildir)
+MYSQL_QUOTA_FIELD concat(quota,'S')
+MYSQL_HOME_FIELD '/mnt/vmail'
+MYSQL_UID_FIELD '5000'
+MYSQL_GID_FIELD '5000'
+
+
+Add users and domains
+
+$ mysql -u postfixadmin -p
+
+use postfix;
+
+insert into domain(domain)
+values('localhost', 'localhost.localdomain', 'reportingfromtheborderland.net');
+
+insert into mailbox (username, password, name, maildir, domain)
+values('cbramdit', encrypt('tigrou'), 'Christophe Bram', 'cbramdit/', 'reportingfromtheborderland.net');
+
+Using Port 587 for Secure Submission
+
+$ sudo vi /etc/postfix/master.cf
+
+Uncomment line:
+submission inet n      -       n       -       -       smtpd
+
+
+$ sudo service postfix restart
+$ sudo service courier-imap-ssl restart
+$ sudo service courier-imap restart
+$ sudo service courier-authdaemon restart
+
+
+
+References
+http://flurdy.com/docs/postfix/
+https://help.ubuntu.com/community/Postfix
+https://help.ubuntu.com/community/PostfixCompleteVirtualMailSystemHowto#Courier-IMAP_and_Authentication_Services
+http://gogs.info/books/debian-mail/chunked/postfix.sasl.html

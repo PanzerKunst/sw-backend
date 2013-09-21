@@ -10,7 +10,7 @@ object ApplicationBuild extends Build {
     // Add your project dependencies here,
     jdbc,
     anorm,
-    "mysql" % "mysql-connector-java" % "5.1.25",
+    "mysql" % "mysql-connector-java" % "5.1.26",
     "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.2.1",
     "com.fasterxml.jackson.core" % "jackson-databind" % "2.2.2"
   )

@@ -1,0 +1,21 @@
+{
+	"subject": null,
+    "textContent": "Hello,\nWorld!",
+    "contentType": "text/html",
+    "from": {
+        "email": "root@reportingfromtheborderland.net",
+        "name": "root"
+    },
+    "replyTo": [],
+    "sender": null,
+    "fromAccountId": 1,
+    "creationTimestamp": 1378885425,
+    "status": "TO_SEND",
+    "to": [{
+        "email": "cbramdit@reportingfromtheborderland.net",
+        "name": "Christophe"
+    }],
+    "cc": [],
+    "bcc": [],
+    "references": []
+}
