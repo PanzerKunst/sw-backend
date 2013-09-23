@@ -64,25 +64,13 @@ object EmailApi extends Controller {
 
       try {
         if (request.queryString.contains("accountId") && request.queryString.contains("status")) {
-          val accountId = request.queryString.get("accountId").get.head
+          val accountId = request.queryString.get("accountId").get.head.toLong
           val statuses = request.queryString.get("status").get.head.split(',').toList
 
-          val matchingEmails = if (statuses.length == 1 && statuses.head == Email.STATUS_SENT) {
-            val filters = Some(Map(
-              "from_account_id" -> accountId,
-              "status" -> Email.STATUS_SENT
-            ))
-
-            EmailDto.get(filters)
-          }
-          else if (!statuses.contains(Email.STATUS_SENT)) {
-            val accountFilters = Some(Map("id" -> accountId))
-            val username = AccountDto.get(accountFilters).head.username
-
-            EmailDto.getEmailsToAccount(username, statuses)
-          }
+          val matchingEmails = if (statuses.contains(Email.STATUS_TO_SEND) || statuses.contains(Email.STATUS_SENT))
+            EmailDto.getEmailsFromAccount(accountId, statuses)
           else {
-            throw new IncorrectEmailRequestException()
+            EmailDto.getEmailsToAccount(accountId, statuses)
           }
 
           if (matchingEmails.isEmpty)
@@ -109,7 +97,7 @@ object EmailApi extends Controller {
       }
   }
 
-  def getOfId(id: Int) = Action {
+  def getOfId(id: Long) = Action {
     implicit request =>
 
       if (request.queryString.contains("accountId")) {
