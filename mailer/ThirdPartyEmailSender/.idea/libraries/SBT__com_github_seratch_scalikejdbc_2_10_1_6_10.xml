@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="SBT: com.github.seratch:scalikejdbc_2.10:1.6.10">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.github.seratch/scalikejdbc_2.10/jars/scalikejdbc_2.10-1.6.10.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.github.seratch/scalikejdbc_2.10/docs/scalikejdbc_2.10-1.6.10-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.github.seratch/scalikejdbc_2.10/srcs/scalikejdbc_2.10-1.6.10-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

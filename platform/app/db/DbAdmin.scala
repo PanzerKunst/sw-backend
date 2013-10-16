@@ -60,9 +60,8 @@ object DbAdmin {
           CREATE TABLE email (
             id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             subject VARCHAR(128),
-            textContent TEXT,
-            htmlContent TEXT,
-            content_type VARCHAR(128) NOT NULL,
+            text_content TEXT,
+            html_content TEXT,
             message_id VARCHAR(128) NOT NULL,
             from_address VARCHAR(128) NOT NULL,
             from_name VARCHAR(128),

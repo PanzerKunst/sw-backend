@@ -1,57 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../README.md" afterPath="$PROJECT_DIR$/../../README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/conf/application.conf" afterPath="$PROJECT_DIR$/../../platform/conf/application.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/models/Account.scala" afterPath="$PROJECT_DIR$/../../platform/app/models/Account.scala" />
+    <list default="true" id="40fb6ad6-3851-477d-ad3c-8461d9cac53a" name="Default" comment="">
+      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__com_github_seratch_scalikejdbc_2_10_1_6_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__com_github_seratch_scalikejdbc_config_2_10_1_6_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__com_typesafe_config_1_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__play_anorm_2_10_2_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\src\main\scala\main\EmailToSentTasker.scala" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/controllers/api/AccountApi.scala" afterPath="$PROJECT_DIR$/../../platform/app/controllers/api/AccountApi.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/db/AccountDto.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/AccountDto.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/db/BccDto.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/BccDto.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/db/CcDto.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/CcDto.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala" afterPath="$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala" />
       <change type="MODIFICATION" beforePath="D:\Pro\sw-backend\platform\app\models\clientside\ClientSideEmail.scala" afterPath="$PROJECT_DIR$/../../platform/app/models/clientside/ClientSideEmail.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/db/DbAdmin.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/DbAdmin.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/models/Email.scala" afterPath="$PROJECT_DIR$/src/main/scala/models/Email.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/models/Email.scala" afterPath="$PROJECT_DIR$/../../platform/app/models/Email.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/controllers/api/EmailApi.scala" afterPath="$PROJECT_DIR$/../../platform/app/controllers/api/EmailApi.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/db/EmailDto.scala" afterPath="$PROJECT_DIR$/src/main/scala/db/EmailDto.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/db/EmailDto.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/EmailDto.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/db/ToDto.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/ToDto.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../localQueries.sql" afterPath="$PROJECT_DIR$/../../localQueries.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newAccount.json" afterPath="$PROJECT_DIR$/../../platformMocks/newAccount.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailFromWrongSwAccount.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailFromWrongSwAccount.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingContentType.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingContentType.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingCreationTimestamp.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingCreationTimestamp.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingSwAccount.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingSwAccount.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingTo.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingTo.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithReferences.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithReferences.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/main/Sender.scala" afterPath="$PROJECT_DIR$/src/main/scala/main/Sender.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.conf" afterPath="$PROJECT_DIR$/src/main/resources/application.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.sbt" afterPath="$PROJECT_DIR$/build.sbt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea_modules/default-c3dbe1-build.iml" afterPath="$PROJECT_DIR$/.idea_modules/default-c3dbe1-build.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea_modules/default-c3dbe1.iml" afterPath="$PROJECT_DIR$/.idea_modules/default-c3dbe1.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailTo3rdParty.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailTo3rdParty.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBcc.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBcc.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBccEmpty.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBccEmpty.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newHTMLEmail.json" afterPath="$PROJECT_DIR$/../../platformMocks/newHTMLEmail.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newMinimalEmail.json" afterPath="$PROJECT_DIR$/../../platformMocks/newMinimalEmail.json" />
-      <change type="MOVED" beforePath="D:\Pro\sw-backend\platform\app\db\SmtpReferencesDto.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/ReferencesDto.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/project/plugins.sbt" afterPath="$PROJECT_DIR$/../../platform/project/plugins.sbt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/conf/routes" afterPath="$PROJECT_DIR$/../../platform/conf/routes" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../serverSetup.txt" afterPath="$PROJECT_DIR$/../serverSetup.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ThirdPartyEmailSender.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379716279122" ignored="false" />
-    <file path="/application.conf" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379719670196" ignored="false" />
-    <file path="/a.dummy" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379549269014" ignored="false" />
-    <file path="/EmailToSentTasker.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379552651059" ignored="false" />
-    <file path="/EmailService.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379720261121" ignored="false" />
-    <file path="/build.sbt" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379512910145" ignored="false" />
-    <file path="/SenderEmailService.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379552752708" ignored="false" />
-    <file path="/EmailQueries.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379516057465" ignored="false" />
-    <file path="/fragment.java" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379552068867" ignored="false" />
-    <file path="/ToDto.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379545907817" ignored="false" />
-    <file path="/CcDto.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379545885377" ignored="false" />
-    <file path="/BccDto.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379719943097" ignored="false" />
-    <file path="/SmtpReferencesDto.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379524630849" ignored="false" />
-    <file path="/AccountDto.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379719264504" ignored="false" />
-    <file path="/ClientSideEmail.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379525328220" ignored="false" />
-    <file path="/Email.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379527991809" ignored="false" />
-    <file path="/ApacheCommonsEmail.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379552204796" ignored="false" />
-    <file path="/EmailDto.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379720645584" ignored="false" />
-    <file path="/InternetAddress.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379549194061" ignored="false" />
-    <file path="/Sender.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379719527676" ignored="false" />
-    <file path="/ReplyToDto.scala" changelist="b7cb143f-ea22-45af-9cac-0ab1dfc991ae" time="1379552091576" ignored="false" />
+    <file path="/Dummy.txt" changelist="40fb6ad6-3851-477d-ad3c-8461d9cac53a" time="1381956602817" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +47,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+    <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
         <option name="NOTIFY_UNCAUGHT" value="true" />
@@ -102,7 +83,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -112,91 +92,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="EmailToSentTasker.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/main/EmailToSentTasker.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BccDto.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/db/BccDto.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="569" selection-end="693" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CcDto.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/db/CcDto.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="690" selection-end="690" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ToDto.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/db/ToDto.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="692" selection-end="692" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="EmailDto.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/db/EmailDto.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="31" selection-start="1559" selection-end="1559" vertical-scroll-proportion="0.0">
+            <state line="67" column="0" selection-start="2180" selection-end="2180" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.conf" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
+      <file leaf-file-name="ApacheCommonsEmail.scala" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="0" selection-start="376" selection-end="376" vertical-scroll-proportion="0.0">
+            <state line="28" column="0" selection-start="870" selection-end="870" vertical-scroll-proportion="0.6276923">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReplyToDto.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/db/ReplyToDto.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="706" selection-end="706" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReferencesDto.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/db/ReferencesDto.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="7" selection-start="116" selection-end="116" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SenderEmailService.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/main/SenderEmailService.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="19" selection-start="603" selection-end="603" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EmailService.scala" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="EmailService.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="0" selection-start="3525" selection-end="3525" vertical-scroll-proportion="0.39086294">
+            <state line="81" column="0" selection-start="2470" selection-end="2470" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Email.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/models/Email.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="7" selection-start="476" selection-end="476" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -220,22 +146,9 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/scala/models/Email.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/models/InternetAddress.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/models/InternetAddressUtils.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/services/ApacheCommonsEmail.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/main/EmailToSentTasker.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/main/SenderEmailService.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/db/AccountDto.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/main/Sender.scala" />
-        <option value="$PROJECT_DIR$/src/main/resources/application.conf" />
-        <option value="$PROJECT_DIR$/src/main/scala/db/BccDto.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/db/CcDto.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/db/ToDto.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/db/ReplyToDto.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/db/EmailDto.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala" />
       </list>
     </option>
   </component>
@@ -287,6 +200,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -382,14 +296,6 @@
               <option name="myItemId" value="scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="clientside" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -406,148 +312,30 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ThirdPartyEmailSender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ThirdPartyEmailSender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ThirdPartyEmailSender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ThirdPartyEmailSender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ThirdPartyEmailSender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ThirdPartyEmailSender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="Errors" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="options.lastSelected" value="Errors" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
   </component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\src\main\scala\com\raulraja\services" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="models" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.Sender">
-    <configuration default="false" name="Sender" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="main.Sender" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="default-c3dbe1" />
-      <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
+  <component name="RunManager">
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -583,14 +371,7 @@
       <envs />
       <method />
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Application.Sender" />
-    </list>
-    <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.Sender" />
-      </list>
-    </recent_temporary>
+    <list size="0" />
     <configuration name="&lt;template&gt;" type="JUnit" default="true" selected="false">
       <option name="MAIN_CLASS_NAME" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -633,25 +414,25 @@
     <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32814023" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32911393" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.600779" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39922103" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.6708861" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -717,112 +498,28 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/scala/models/Email.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="11" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/models/clientside/ClientSideEmail.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/raulraja/services/SmtpConfig.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="11" selection-start="318" selection-end="318" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/db/AccountDto.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="446" selection-end="446" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/main/Sender.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="365" selection-end="365" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="6" selection-start="701" selection-end="701" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="376" selection-end="376" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/main/SenderEmailService.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="19" selection-start="603" selection-end="603" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/main/EmailToSentTasker.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/db/BccDto.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="569" selection-end="693" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/db/ToDto.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="692" selection-end="692" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/db/ReplyToDto.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="706" selection-end="706" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/db/ReferencesDto.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="7" selection-start="116" selection-end="116" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/db/CcDto.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="690" selection-end="690" vertical-scroll-proportion="0.0">
+        <state line="15" column="7" selection-start="476" selection-end="476" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/db/EmailDto.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="31" selection-start="1559" selection-end="1559" vertical-scroll-proportion="0.0">
+        <state line="67" column="0" selection-start="2180" selection-end="2180" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="0" selection-start="3525" selection-end="3525" vertical-scroll-proportion="0.39086294">
+        <state line="81" column="0" selection-start="2470" selection-end="2470" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="0" selection-start="870" selection-end="870" vertical-scroll-proportion="0.6276923">
           <folding />
         </state>
       </provider>
@@ -880,7 +577,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>default-c3dbe1</last-edited>
+          <last-edited>Scala|default-c3dbe1</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -892,7 +589,18 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>SBT: ch.qos.logback:logback-classic:1.0.13</last-edited>
+          <last-edited>SBT: scala:2.10.2</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>

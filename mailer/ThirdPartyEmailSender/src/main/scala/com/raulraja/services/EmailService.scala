@@ -4,7 +4,7 @@ import akka.actor._
 import akka.actor.SupervisorStrategy._
 import akka.routing.SmallestMailboxRouter
 import com.typesafe.scalalogging.slf4j.Logging
-import main.{SenderEmailService, Sender}
+import main.Sender
 import org.apache.commons.mail.{EmailException, DefaultAuthenticator, HtmlEmail}
 import collection.JavaConversions._
 import models.ApacheCommonsEmail
@@ -79,38 +79,24 @@ object EmailService {
       case None =>
     }
 
-    email.updateContentType(emailMessage.contentType)
-
     email.setFrom(emailMessage.from.getAddress, emailMessage.from.getPersonal)
 
-    for (internetAddress <- emailMessage.replyList) {
+    for (internetAddress <- emailMessage.replyList)
       email.addReplyTo(internetAddress.getAddress, internetAddress.getPersonal)
-    }
 
-    for (internetAddress <- emailMessage.toList) {
-      if (isThirdPartyAddress(internetAddress.getAddress))
-        email.addTo(internetAddress.getAddress, internetAddress.getPersonal)
-    }
+    for (internetAddress <- emailMessage.toList)
+      email.addTo(internetAddress.getAddress, internetAddress.getPersonal)
 
-    for (internetAddress <- emailMessage.ccList) {
-      if (isThirdPartyAddress(internetAddress.getAddress))
-        email.addCc(internetAddress.getAddress, internetAddress.getPersonal)
-    }
+    for (internetAddress <- emailMessage.ccList)
+      email.addCc(internetAddress.getAddress, internetAddress.getPersonal)
 
-    for (internetAddress <- emailMessage.bccList) {
-      if (isThirdPartyAddress(internetAddress.getAddress))
-        email.addBcc(internetAddress.getAddress, internetAddress.getPersonal)
-    }
+    for (internetAddress <- emailMessage.bccList)
+      email.addBcc(internetAddress.getAddress, internetAddress.getPersonal)
 
     email.setHeaders(emailMessage.headers)
 
     if (!email.getToAddresses.isEmpty || !email.getCcAddresses.isEmpty || !email.getBccAddresses.isEmpty)
       email.send()
-  }
-
-  private def isThirdPartyAddress(address: String): Boolean = {
-    val addressDomain = address.substring(address.indexOf("@") + 1)
-    addressDomain != SenderEmailService.MAILER_DOMAIN
   }
 
   /**

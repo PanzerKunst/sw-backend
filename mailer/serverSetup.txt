@@ -1,3 +1,8 @@
+#################
+# Hostname config
+#################
+
+
 Make sure that there is an MX DNS record for "reportingfromtheborderland.net" pointing to "mailer.reportingfromtheborderland.net"
 
 $ sudo vi /etc/hostname
@@ -12,6 +17,12 @@ Check address in "ifconfig"
 $ sudo vi /etc/hosts
 172.31.38.234 mailer.reportingfromtheborderland.net mailer #address from “ifconfig”
 
+
+###################
+# MySQL basic setup
+###################
+
+
 $ sudo apt-get install mysql-client mysql-server
 $ sudo vi postfixadmin-mysql.sql
 Paste contents
@@ -23,6 +34,12 @@ general_log_file
 general_log
 
 $ sudo service mysql restart
+
+
+#####################
+# Postfix basic setup
+#####################
+
 
 $ sudo apt-get install postfix postfix-mysql
 
@@ -55,6 +72,11 @@ smtpd_client_restrictions = reject_rbl_client sbl.spamhaus.org, reject_rbl_clien
 smtpd_recipient_restrictions = reject_unauth_pipelining, permit_mynetworks, reject_non_fqdn_recipient, reject_unknown_recipient_domain, reject_unauth_destination, permit
 # Block clients that speak too early
 smtpd_data_restrictions = reject_unauth_pipelining
+
+
+####################
+# Virtual alias maps
+####################
 
 
 Create virtual alias maps
@@ -148,6 +170,11 @@ virtual_mailbox_base = /mnt/vmail
 virtual_transport = virtual
 
 
+######
+# SASL
+######
+
+
 Set up SASL, otherwise the default Postfix config will prevent email relay to 3rd party domains (cf. "smtpd_relay_restrictions" in main.cf)
 
 $ sudo apt-get install libsasl2-modules libsasl2-modules-sql sasl2-bin libpam-mysql
@@ -221,7 +248,10 @@ $ sudo service saslauthd restart
 $ sudo service postfix restart
 
 
-Allow access from other SW servers (0.0.0.0 for anywhere):
+############################################################
+# Allow access from other SW servers (0.0.0.0 for anywhere):
+############################################################
+
 
 $ sudo vi /etc/mysql/my.cnf
 
@@ -235,6 +265,123 @@ $ mysql -u root -p
 $ grant all privileges on postfix.* to 'postfixadmin'@'%' identified by '34ig1su4';
 $ grant all privileges on postfix.* to 'postfix'@'%' identified by '34ig1su4';
 $ flush privileges;
+
+
+#######################
+# Add users and domains
+#######################
+
+
+$ mysql -u postfixadmin -p
+
+use postfix;
+
+insert into domain(domain)
+values('localhost', 'localhost.localdomain', 'reportingfromtheborderland.net');
+
+insert into mailbox (username, password, name, maildir, domain)
+values('cbramdit', encrypt('tigrou'), 'Christophe Bram', 'cbramdit/', 'reportingfromtheborderland.net');
+
+
+
+#####################
+# SSL certificates
+#####################
+
+
+First generate a private key for the server:
+
+$ openssl genrsa -des3 -rand /etc/hosts -out mailer.reportingfromtheborderland.net.key 2048
+
+
+Then you create a certificate request:
+
+$ openssl req -new -key mailer.reportingfromtheborderland.net.key -out mailer.reportingfromtheborderland.net.csr
+
+For "Common Name (e.g. server FQDN or YOUR name)", enter "mailer.reportingfromtheborderland.net"
+
+
+To avoid error "unable to write 'random state'" (http://stackoverflow.com/questions/94445/using-openssl-what-does-unable-to-write-random-state-mean):
+
+$ sudo rm ~/.rnd
+
+
+Create a self signed key:
+
+$ openssl x509 -req -days 365 -in mailer.reportingfromtheborderland.net.csr -signkey mailer.reportingfromtheborderland.net.key -out mailer.reportingfromtheborderland.net.crt
+
+
+Remove the password from the private certificate (we do this, so we don’t have to enter a password when you restart postfix):
+
+$ openssl rsa -in mailer.reportingfromtheborderland.net.key -out mailer.reportingfromtheborderland.net.key.nopass
+$ mv mailer.reportingfromtheborderland.net.key.nopass mailer.reportingfromtheborderland.net.key
+
+
+Make ourself a trusted CA:
+
+$ openssl req -new -x509 -extensions v3_ca -keyout cakey.pem -out cacert.pem -days 3650
+
+
+Copy the files to a proper location:
+
+$ chmod 600 mailer.reportingfromtheborderland.net.key
+$ chmod 600 cakey.pem
+$ sudo mv mailer.reportingfromtheborderland.net.key /etc/ssl/private/
+$ sudo mv mailer.reportingfromtheborderland.net.crt /etc/ssl/certs/
+$ sudo mv cakey.pem /etc/ssl/private/
+$ sudo mv cacert.pem /etc/ssl/certs/
+
+
+Update the TLS config in Postfix:
+
+$ sudo vi /etc/postfix/main.cf
+
+# TLS parameters
+# smtp_use_tls = no
+smtp_tls_security_level = may
+# smtpd_use_tls=yes
+smtpd_tls_security_level = may
+# smtpd_tls_auth_only = no
+smtp_tls_note_starttls_offer = yes
+smtpd_tls_loglevel = 1
+smtpd_tls_received_header = yes
+smtpd_tls_session_cache_timeout = 3600s
+tls_random_source = dev:/dev/urandom
+smtpd_tls_cert_file=/etc/ssl/certs/mailer.reportingfromtheborderland.net.crt
+smtpd_tls_key_file=/etc/ssl/private/mailer.reportingfromtheborderland.net.key
+# smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+# smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtp_tls_CAfile = /etc/ssl/certs/cacert.pem
+
+
+Restart Postfix:
+
+$ sudo service postfix restart
+
+
+#######################################
+# Make sure that the right Java is used
+#######################################
+
+Check which Java JDK is installed (for example: /usr/lib/jvm/java-7-openjdk-amd64)
+
+$ vi ~/.profile
+
+Add the following 2 lines:
+export PATH=/usr/lib/jvm/java-7-openjdk-amd64/bin:$PATH
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+
+Re-exec the file:
+
+$ source ~/.profile
+
+
+##############################################
+# Add certificate to Java email Sender program
+##############################################
+
+$ sudo keytool -import -noprompt -trustcacerts -alias Postfix -file /etc/ssl/certs/mailer.reportingfromtheborderland.net.crt -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit
+
 
 
 ##########
@@ -270,17 +417,6 @@ MYSQL_UID_FIELD '5000'
 MYSQL_GID_FIELD '5000'
 
 
-Add users and domains
-
-$ mysql -u postfixadmin -p
-
-use postfix;
-
-insert into domain(domain)
-values('localhost', 'localhost.localdomain', 'reportingfromtheborderland.net');
-
-insert into mailbox (username, password, name, maildir, domain)
-values('cbramdit', encrypt('tigrou'), 'Christophe Bram', 'cbramdit/', 'reportingfromtheborderland.net');
 
 Using Port 587 for Secure Submission
 
@@ -300,5 +436,6 @@ $ sudo service courier-authdaemon restart
 References
 http://flurdy.com/docs/postfix/
 https://help.ubuntu.com/community/Postfix
-https://help.ubuntu.com/community/PostfixCompleteVirtualMailSystemHowto#Courier-IMAP_and_Authentication_Services
+https://help.ubuntu.com/community/PostfixCompleteVirtualMailSystemHowto
 http://gogs.info/books/debian-mail/chunked/postfix.sasl.html
+http://www.e-rave.nl/create-a-self-signed-ssl-key-for-postfix

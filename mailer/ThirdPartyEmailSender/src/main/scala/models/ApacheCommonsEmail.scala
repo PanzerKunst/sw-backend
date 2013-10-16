@@ -4,12 +4,12 @@ import javax.mail.internet.InternetAddress
 import scala.concurrent.duration.FiniteDuration
 import db._
 import com.raulraja.services.SmtpConfig
+import main.SenderEmailService
 
 class ApacheCommonsEmail {
   var subject: Option[String] = None
   var textContent: Option[String] = None
   var htmlContent: Option[String] = None
-  var contentType: String = _
   var from: InternetAddress = _
   var replyList: List[InternetAddress] = List()
   var toList: List[InternetAddress] = List()
@@ -20,18 +20,35 @@ class ApacheCommonsEmail {
   var retryOn: FiniteDuration = _
   var deliveryAttempts: Int = 0
 
+  private var numberOfAccountsAmongRecipients: Int = 0
+
   def this(email: Email, smtpConfig: SmtpConfig, retryOn: FiniteDuration) = {
     this()
 
     subject = email.subject
-    textContent = email.textContent
-    htmlContent = email.htmlContent
-    contentType = email.contentType
     from = email.from
-    replyList = ReplyToDto.getForEmailId(email.id)
-    toList = ToDto.getForEmailId(email.id)
-    ccList = CcDto.getForEmailId(email.id)
-    bccList = BccDto.getForEmailId(email.id)
+
+    replyList = ReplyToDto.getForEmailId(email.id).filter(internetAddress => !isThirdPartyAddress(internetAddress.getAddress))
+
+    for (internetAddress <- ToDto.getForEmailId(email.id)) {
+      if (isThirdPartyAddress(internetAddress.getAddress))
+        toList = toList :+ internetAddress
+      else
+        numberOfAccountsAmongRecipients = numberOfAccountsAmongRecipients + 1
+    }
+
+    for (internetAddress <- CcDto.getForEmailId(email.id)) {
+      if (isThirdPartyAddress(internetAddress.getAddress))
+        ccList = ccList :+ internetAddress
+      else
+        numberOfAccountsAmongRecipients = numberOfAccountsAmongRecipients + 1
+    }
+
+    bccList = BccDto.getForEmailId(email.id).filter(internetAddress => !isThirdPartyAddress(internetAddress.getAddress))
+
+    textContent = textContentWithNotificationOfAccounts(email.textContent)
+    htmlContent = htmlContentWithNotificationOfAccounts(email.htmlContent)
+
     headers = generateHeaders(email)
     this.smtpConfig = smtpConfig
     this.retryOn = retryOn
@@ -46,43 +63,11 @@ class ApacheCommonsEmail {
         )
     }
 
-    if (!toList.isEmpty) {
-      result += (
-        "To" -> generateRecipientLine(email, toList)
-        )
-    }
-
-    if (!ccList.isEmpty) {
-      result += (
-        "Cc" -> generateRecipientLine(email, ccList)
-        )
-    }
-
-    if (!bccList.isEmpty) {
-      result += (
-        "Bcc" -> generateRecipientLine(email, bccList)
-        )
-    }
-
     val references = ReferencesDto.getForEmailId(email.id)
     if (!references.isEmpty) {
       result += (
         "References" -> generateReferencesLine(email, references)
         )
-    }
-
-    result
-  }
-
-  private def generateRecipientLine(email: Email, internetAddresses: List[InternetAddress]): String = {
-    var result = ""
-
-    if (!internetAddresses.isEmpty) {
-      result += internetAddresses.head
-    }
-
-    for (i <- 1 to internetAddresses.length - 1) {
-      result += ", " + internetAddresses.apply(i)
     }
 
     result
@@ -100,5 +85,32 @@ class ApacheCommonsEmail {
     }
 
     result
+  }
+
+  private def isThirdPartyAddress(address: String): Boolean = {
+    val addressDomain = address.substring(address.indexOf("@") + 1)
+    addressDomain != SenderEmailService.MAILER_DOMAIN
+  }
+
+  private def textContentWithNotificationOfAccounts(textContent: Option[String]): Option[String] = {
+    textContent match {
+      case None => None
+      case Some(content) => Some(content + "\n" + notificationOfAccountsMessage)
+    }
+  }
+
+  private def htmlContentWithNotificationOfAccounts(htmlContent: Option[String]): Option[String] = {
+    htmlContent match {
+      case None => None
+      case Some(content) => Some(content + "<p style='font-style: italic;'>" + notificationOfAccountsMessage + "</p>")
+    }
+  }
+
+  private def notificationOfAccountsMessage: String = {
+    numberOfAccountsAmongRecipients match {
+      case 0 => null
+      case 1 => "Note: one @" + SenderEmailService.MAILER_DOMAIN + " user was also recipient of this message. This user received an encrypted copy of this message, and for security reasons his or her address is not in the list of recipients."
+      case _ => "Note: " + numberOfAccountsAmongRecipients + " @" + SenderEmailService.MAILER_DOMAIN + " users were also recipients of this message. These " + numberOfAccountsAmongRecipients + " users received an encrypted copy of this message, and for security reasons their address is not in the list of recipients."
+    }
   }
 }

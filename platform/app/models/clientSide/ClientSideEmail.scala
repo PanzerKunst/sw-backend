@@ -20,9 +20,6 @@ class ClientSideEmail {
   var htmlContent: Option[String] = None
 
   @JsonProperty
-  var contentType: String = _
-
-  @JsonProperty
   var messageId: Option[String] = None
 
   @JsonProperty
@@ -70,7 +67,6 @@ class ClientSideEmail {
     this.subject = email.subject
     this.textContent = email.textContent
     this.htmlContent = email.htmlContent
-    this.contentType = email.contentType
     this.messageId = Some(email.messageId)
     this.from = email.from
     this.sender = email.sender
@@ -87,8 +83,7 @@ class ClientSideEmail {
   }
 
   def validate: Option[String] = {
-    if (this.contentType == null ||
-      this.from == null ||
+    if (this.from == null ||
       this.replyTo == null ||
       !this.fromAccountId.isDefined ||
       this.creationTimestamp == 0.toLong ||
@@ -105,12 +100,7 @@ class ClientSideEmail {
 
       Some(ClientSideEmail.ERROR_MSG_INCORRECT_STATUS)
     }
-    else if (this.contentType != Email.CONTENT_TYPE_TEXT &&
-      this.contentType != Email.CONTENT_TYPE_HTML_WITH_TEXT_FALLBACK__PREFIX) {
-
-      Some(ClientSideEmail.ERROR_MSG_INCORRECT_CONTENT_TYPE)
-    }
-    else if (this.to.length == 0 && this.cc.length == 0 && this.bcc.length == 0) {
+    else if (this.to.isEmpty && this.cc.isEmpty && this.bcc.isEmpty) {
       Some(ClientSideEmail.ERROR_MSG_TO_CC_BCC_ALL_EMPTY)
     }
     else {
@@ -123,7 +113,6 @@ object ClientSideEmail {
   val ERROR_MSG_MISSING_REQUIRED_FIELDS = "Some required fields are missing"
   val ERROR_MSG_TO_CC_BCC_ALL_EMPTY = "'to', 'cc' and 'bcc' cannot all be empty"
   val ERROR_MSG_INCORRECT_STATUS = "Incorrect status"
-  val ERROR_MSG_INCORRECT_CONTENT_TYPE = "Incorrect content type"
 
   implicit val writes = new Writes[ClientSideEmail] {
     def writes(email: ClientSideEmail): JsValue = {
@@ -132,7 +121,6 @@ object ClientSideEmail {
         "subject" -> email.subject,
         "textContent" -> email.textContent,
         "htmlContent" -> email.htmlContent,
-        "contentType" -> email.contentType,
         "messageId" -> email.messageId,
         "from" -> email.from,
         "replyTo" -> email.replyTo,

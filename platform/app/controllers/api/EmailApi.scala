@@ -15,7 +15,6 @@ object EmailApi extends Controller {
   val HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY = 521
   val HTTP_STATUS_ACCOUNT_NOT_FOUND = 522
   val HTTP_STATUS_INCORRECT_STATUS = 523
-  val HTTP_STATUS_INCORRECT_CONTENT_TYPE = 524
 
   def create = Action(parse.json) {
     implicit request =>
@@ -28,10 +27,8 @@ object EmailApi extends Controller {
             Status(HTTP_STATUS_CODE_MISSING_REQUIRED_FIELDS)
           else if (errorMsg == ClientSideEmail.ERROR_MSG_TO_CC_BCC_ALL_EMPTY)
             Status(HTTP_STATUS_CODE_TO_CC_BCC_ALL_EMPTY)
-          else if (errorMsg == ClientSideEmail.ERROR_MSG_INCORRECT_STATUS)
-            Status(HTTP_STATUS_INCORRECT_STATUS)
           else
-            Status(HTTP_STATUS_INCORRECT_CONTENT_TYPE)
+            Status(HTTP_STATUS_INCORRECT_STATUS)
         case None =>
           try {
             EmailDto.create(clientSideEmail) match {
@@ -64,25 +61,13 @@ object EmailApi extends Controller {
 
       try {
         if (request.queryString.contains("accountId") && request.queryString.contains("status")) {
-          val accountId = request.queryString.get("accountId").get.head
+          val accountId = request.queryString.get("accountId").get.head.toLong
           val statuses = request.queryString.get("status").get.head.split(',').toList
 
-          val matchingEmails = if (statuses.length == 1 && statuses.head == Email.STATUS_SENT) {
-            val filters = Some(Map(
-              "from_account_id" -> accountId,
-              "status" -> Email.STATUS_SENT
-            ))
-
-            EmailDto.get(filters)
-          }
-          else if (!statuses.contains(Email.STATUS_SENT)) {
-            val accountFilters = Some(Map("id" -> accountId))
-            val username = AccountDto.get(accountFilters).head.username
-
-            EmailDto.getEmailsToAccount(username, statuses)
-          }
+          val matchingEmails = if (statuses.contains(Email.STATUS_TO_SEND) || statuses.contains(Email.STATUS_SENT))
+            EmailDto.getEmailsFromAccount(accountId, statuses)
           else {
-            throw new IncorrectEmailRequestException()
+            EmailDto.getEmailsToAccount(accountId, statuses)
           }
 
           if (matchingEmails.isEmpty)
@@ -109,7 +94,7 @@ object EmailApi extends Controller {
       }
   }
 
-  def getOfId(id: Int) = Action {
+  def getOfId(id: Long) = Action {
     implicit request =>
 
       if (request.queryString.contains("accountId")) {

@@ -57,7 +57,7 @@ object AccountApi extends Controller {
       }
   }
 
-  def getOfId(id: Int) = Action {
+  def getOfId(id: Long) = Action {
     implicit request =>
 
       val filters = Some(Map("id" -> id.toString))
