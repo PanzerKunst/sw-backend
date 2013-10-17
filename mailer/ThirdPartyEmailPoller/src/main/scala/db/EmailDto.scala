@@ -5,6 +5,9 @@ import scalikejdbc.ConnectionPool
 import com.typesafe.scalalogging.slf4j.Logging
 import models.{InternetAddress, Email}
 import java.math.BigInteger
+import javax.security.auth.login.AccountNotFoundException
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException
+import models.clientside.ClientSideEmail
 
 object EmailDto extends Logging {
   def getEmailsToSend: List[Email] = {
@@ -51,53 +54,59 @@ object EmailDto extends Logging {
     }
   }
 
-  def update(email: Email) {
+  def create(email: ClientSideEmail): Option[Long] = {
     implicit val c = ConnectionPool.borrow()
 
-    var query = """
-      update email set
-      text_content={textContent},
-      html_content={htmlContent},
-      message_id="""" + email.messageId + """",
-      from_address="""" + email.from.email + """",
-      creation_timestamp=""" + email.creationTimestamp + """,
-      status="""" + email.status + """""""
+    var subjectForQuery = "NULL"
+    if (email.subject.isDefined && email.subject.get != "")
+      subjectForQuery = "\"" + DbUtil.backslashQuotes(email.subject.get) + "\""
 
-    email.subject match {
-      case Some(subject) => query += """, subject="""" + subject + """""""
-      case None => query += """, subject=NULL"""
+    var fromNameForQuery = "NULL"
+    if (email.from.name.isDefined && email.from.name.get != "")
+      fromNameForQuery = "\"" + DbUtil.backslashQuotes(email.from.name.get) + "\""
+
+    var senderAddressForQuery = "NULL"
+    var senderNameForQuery = "NULL"
+    if (email.sender.isDefined) {
+      val sender = email.sender.get
+      senderAddressForQuery = "\"" + DbUtil.backslashQuotes(sender.email) + "\""
+
+      if (sender.name.isDefined) {
+        senderNameForQuery = "\"" + DbUtil.backslashQuotes(sender.name.get) + "\""
+      }
     }
 
-    if (email.from.name != null)
-      query += """, from_name="""" + email.from.name + """""""
-    else
-      query += """, from_name=NULL"""
+    val query = """
+                       insert into email(subject, text_content, html_content, message_id, from_address, from_name, sender_address, sender_name, from_account_id, creation_timestamp, status)
+          values(""" + subjectForQuery + """,
+          {textContent},
+          {htmlContent},
+          """" + Email.generateMessageId() + """",
+          """" + email.from.email + """",
+          """ + fromNameForQuery + """,
+          """ + senderAddressForQuery + """,
+          """ + senderNameForQuery + """,
+          """ + email.fromAccountId.getOrElse("NULL") + """,
+          """ + email.creationTimestamp + """,
+          """" + email.status + """");"""
 
-    email.sender match {
-      case Some(sender) =>
-        query += """, sender_address="""" + sender.email + """""""
-        if (sender.name != null)
-          query += """, sender_name="""" + sender.name + """""""
-        else
-          query += """, sender_name=NULL"""
-      case None => query += """, sender_address=NULL, sender_name=NULL"""
-    }
-
-    email.fromAccountId match {
-      case Some(accountId) => query += """, from_account_id=""" + accountId
-      case None => query += """, from_accound_id=NULL"""
-    }
-
-    query += """
-      where id=""" + email.id + """;"""
-
-    logger.info("EmailDto.update():" + query)
+    logger.info("EmailDto.create():" + query)
 
     try {
+      // We need to use "on" otherwise the new lines inside the "textContentForQuery" and "htmlContentForQuery" are removed
       SQL(query).on(
         "textContent" -> email.textContent,
         "htmlContent" -> email.htmlContent
-      ).executeUpdate()
+      ).executeInsert()
+    }
+    catch {
+      case msicve: MySQLIntegrityConstraintViolationException =>
+        """CONSTRAINT\s`fk_account`\sFOREIGN\sKEY\s\(`from_account_id`\)\sREFERENCES\s`account`\s\(`id`\)""".r.findFirstIn(msicve.getMessage) match {
+          case Some(foo) => throw new AccountNotFoundException
+          case None => throw msicve
+        }
+      case e: Exception =>
+        throw e
     }
     finally {
       c.close()

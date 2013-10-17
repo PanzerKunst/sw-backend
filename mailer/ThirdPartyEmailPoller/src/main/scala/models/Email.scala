@@ -31,7 +31,7 @@ object Email {
 
   val CONTENT_TYPE_TEXT = "text/plain"
   val CONTENT_TYPE_HTML = "text/html"
-  val CONTENT_TYPE_HTML_WITH_TEXT_FALLBACK = "multipart/alternative"
+  val CONTENT_TYPE_MULTIPART_ALTERNATIVE = "multipart/alternative"
 
   val HEADER_SUBJECT = "subject"
   val HEADER_CONTENT_TYPE = "content-type"

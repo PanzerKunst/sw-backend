@@ -16,7 +16,7 @@ object Sender extends Logging {
     //This will schedule to send a msg to the EmailToSentTasker.actor after 0ms repeating every second
     val cancellable = system.scheduler.schedule(
       0 milliseconds,
-      1 second,
+      5 seconds,
       EmailsToSendTasker.actor,
       None
     )

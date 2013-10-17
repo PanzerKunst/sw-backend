@@ -2,37 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40fb6ad6-3851-477d-ad3c-8461d9cac53a" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__com_github_seratch_scalikejdbc_2_10_1_6_8.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__com_github_seratch_scalikejdbc_config_2_10_1_6_8.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__com_typesafe_config_1_0_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__play_anorm_2_10_2_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\src\main\scala\main\EmailToSentTasker.scala" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/controllers/api/AccountApi.scala" afterPath="$PROJECT_DIR$/../../platform/app/controllers/api/AccountApi.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala" afterPath="$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala" />
-      <change type="MODIFICATION" beforePath="D:\Pro\sw-backend\platform\app\models\clientside\ClientSideEmail.scala" afterPath="$PROJECT_DIR$/../../platform/app/models/clientside/ClientSideEmail.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/db/DbAdmin.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/DbAdmin.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/models/Email.scala" afterPath="$PROJECT_DIR$/src/main/scala/models/Email.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/models/Email.scala" afterPath="$PROJECT_DIR$/../../platform/app/models/Email.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/controllers/api/EmailApi.scala" afterPath="$PROJECT_DIR$/../../platform/app/controllers/api/EmailApi.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/db/EmailDto.scala" afterPath="$PROJECT_DIR$/src/main/scala/db/EmailDto.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/db/EmailDto.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/EmailDto.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala" />
+      <change type="DELETED" beforePath="D:\Pro\sw-backend\platformMocks\newEmailMissingContentType.json" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/models/Email.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/models/Email.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/db/EmailDto.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/db/EmailDto.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/main/EmailsToPollTasker.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/main/EmailsToPollTasker.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/main/Poller.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/main/Poller.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/main/Sender.scala" afterPath="$PROJECT_DIR$/src/main/scala/main/Sender.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.conf" afterPath="$PROJECT_DIR$/src/main/resources/application.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.sbt" afterPath="$PROJECT_DIR$/build.sbt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea_modules/default-c3dbe1-build.iml" afterPath="$PROJECT_DIR$/.idea_modules/default-c3dbe1-build.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea_modules/default-c3dbe1.iml" afterPath="$PROJECT_DIR$/.idea_modules/default-c3dbe1.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/resources/application.conf" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/resources/application.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/build.sbt" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/build.sbt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/.idea/misc.xml" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailFromWrongSwAccount.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailFromWrongSwAccount.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingCreationTimestamp.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingCreationTimestamp.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingStatus.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingStatus.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingSwAccount.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingSwAccount.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingTo.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingTo.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailTo3rdParty.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailTo3rdParty.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithReferences.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithReferences.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBcc.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBcc.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/project/plugins.sbt" afterPath="$PROJECT_DIR$/../../platform/project/plugins.sbt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/conf/routes" afterPath="$PROJECT_DIR$/../../platform/conf/routes" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../serverSetup.txt" afterPath="$PROJECT_DIR$/../serverSetup.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBccEmpty.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBccEmpty.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWrongContentType.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWrongContentType.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWrongStatus.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWrongStatus.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newHTMLEmail.json" afterPath="$PROJECT_DIR$/../../platformMocks/newHTMLEmail.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newMinimalEmail.json" afterPath="$PROJECT_DIR$/../../platformMocks/newMinimalEmail.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ThirdPartyEmailSender.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="40fb6ad6-3851-477d-ad3c-8461d9cac53a" time="1381956602817" ignored="false" />
+    <file path="/Dummy.txt" changelist="40fb6ad6-3851-477d-ad3c-8461d9cac53a" time="1382022992660" ignored="false" />
+    <file path="/Poller.scala" changelist="40fb6ad6-3851-477d-ad3c-8461d9cac53a" time="1382023061561" ignored="false" />
+    <file path="/Sender.scala" changelist="40fb6ad6-3851-477d-ad3c-8461d9cac53a" time="1382023071676" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +47,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <breakpoint_any>
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
         <option name="NOTIFY_UNCAUGHT" value="true" />
@@ -83,6 +83,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -101,10 +102,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApacheCommonsEmail.scala" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Sender.scala" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/main/Sender.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="0" selection-start="612" selection-end="612" vertical-scroll-proportion="0.3226773">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ApacheCommonsEmail.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="0" selection-start="870" selection-end="870" vertical-scroll-proportion="0.6276923">
+            <state line="23" column="0" selection-start="751" selection-end="751" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.conf" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="0" selection-start="406" selection-end="406" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -149,6 +168,8 @@
         <option value="$PROJECT_DIR$/src/main/scala/db/EmailDto.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.conf" />
+        <option value="$PROJECT_DIR$/src/main/scala/main/Sender.scala" />
       </list>
     </option>
   </component>
@@ -200,7 +221,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -296,6 +316,10 @@
               <option name="myItemId" value="scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -314,15 +338,42 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ThirdPartyEmailSender" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ThirdPartyEmailSender" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
@@ -332,8 +383,8 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -414,25 +465,25 @@
     <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32911393" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.6708861" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -510,6 +561,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="751" selection-end="751" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="81" column="0" selection-start="2470" selection-end="2470" vertical-scroll-proportion="0.0">
@@ -517,9 +582,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/models/Email.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="7" selection-start="476" selection-end="476" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/db/EmailDto.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="0" selection-start="2180" selection-end="2180" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="870" selection-end="870" vertical-scroll-proportion="0.6276923">
+        <state line="28" column="0" selection-start="870" selection-end="870" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="0" selection-start="2470" selection-end="2470" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/models/Email.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="7" selection-start="476" selection-end="476" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/models/Email.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="7" selection-start="476" selection-end="476" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/models/ApacheCommonsEmail.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="751" selection-end="751" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="406" selection-end="406" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/raulraja/services/EmailService.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="0" selection-start="2470" selection-end="2470" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/db/EmailDto.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="0" selection-start="2180" selection-end="2180" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/main/Sender.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="612" selection-end="612" vertical-scroll-proportion="0.3226773">
           <folding />
         </state>
       </provider>
@@ -565,7 +700,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.7</last-edited>
+          <last-edited>1.7.0_45</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -577,7 +712,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Scala|default-c3dbe1</last-edited>
+          <last-edited>default-c3dbe1-build</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

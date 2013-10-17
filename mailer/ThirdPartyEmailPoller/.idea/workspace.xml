@@ -2,37 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__com_github_seratch_scalikejdbc_2_10_1_6_8.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__com_github_seratch_scalikejdbc_config_2_10_1_6_8.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__com_typesafe_config_1_0_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\.idea\libraries\SBT__play_anorm_2_10_2_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\mailer\ThirdPartyEmailSender\src\main\scala\main\EmailToSentTasker.scala" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/controllers/api/AccountApi.scala" afterPath="$PROJECT_DIR$/../../platform/app/controllers/api/AccountApi.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/scala/models/ApacheCommonsEmail.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/scala/models/ApacheCommonsEmail.scala" />
-      <change type="MODIFICATION" beforePath="D:\Pro\sw-backend\platform\app\models\clientside\ClientSideEmail.scala" afterPath="$PROJECT_DIR$/../../platform/app/models/clientside/ClientSideEmail.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/db/DbAdmin.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/DbAdmin.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/scala/models/Email.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/scala/models/Email.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/models/Email.scala" afterPath="$PROJECT_DIR$/../../platform/app/models/Email.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/controllers/api/EmailApi.scala" afterPath="$PROJECT_DIR$/../../platform/app/controllers/api/EmailApi.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/scala/db/EmailDto.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/scala/db/EmailDto.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/app/db/EmailDto.scala" afterPath="$PROJECT_DIR$/../../platform/app/db/EmailDto.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/scala/com/raulraja/services/EmailService.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/scala/com/raulraja/services/EmailService.scala" />
+      <change type="DELETED" beforePath="D:\Pro\sw-backend\platformMocks\newEmailMissingContentType.json" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/models/Email.scala" afterPath="$PROJECT_DIR$/src/main/scala/models/Email.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/db/EmailDto.scala" afterPath="$PROJECT_DIR$/src/main/scala/db/EmailDto.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/main/EmailsToPollTasker.scala" afterPath="$PROJECT_DIR$/src/main/scala/main/EmailsToPollTasker.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/main/Poller.scala" afterPath="$PROJECT_DIR$/src/main/scala/main/Poller.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/scala/main/Sender.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/scala/main/Sender.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/resources/application.conf" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/resources/application.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/build.sbt" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/build.sbt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/.idea_modules/default-c3dbe1-build.iml" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/.idea_modules/default-c3dbe1-build.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/.idea_modules/default-c3dbe1.iml" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/.idea_modules/default-c3dbe1.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.conf" afterPath="$PROJECT_DIR$/src/main/resources/application.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.sbt" afterPath="$PROJECT_DIR$/build.sbt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/.idea/misc.xml" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailFromWrongSwAccount.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailFromWrongSwAccount.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingCreationTimestamp.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingCreationTimestamp.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingStatus.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingStatus.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingSwAccount.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingSwAccount.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingTo.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingTo.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailTo3rdParty.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailTo3rdParty.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithReferences.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithReferences.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBcc.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBcc.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/project/plugins.sbt" afterPath="$PROJECT_DIR$/../../platform/project/plugins.sbt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platform/conf/routes" afterPath="$PROJECT_DIR$/../../platform/conf/routes" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../serverSetup.txt" afterPath="$PROJECT_DIR$/../serverSetup.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBccEmpty.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBccEmpty.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWrongContentType.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWrongContentType.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWrongStatus.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWrongStatus.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newHTMLEmail.json" afterPath="$PROJECT_DIR$/../../platformMocks/newHTMLEmail.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newMinimalEmail.json" afterPath="$PROJECT_DIR$/../../platformMocks/newMinimalEmail.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailSender/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../ThirdPartyEmailSender/.idea/workspace.xml" />
     </list>
     <ignored path="ThirdPartyEmailPoller.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1381957298606" ignored="false" />
+    <file path="/Dummy.txt" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1382022992661" ignored="false" />
+    <file path="/EmailsToPollTasker.scala" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1382021701883" ignored="false" />
+    <file path="/fragment.java" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1382003601535" ignored="false" />
+    <file path="/Untitled.java" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1382002813143" ignored="false" />
+    <file path="/a.java" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1381968905268" ignored="false" />
+    <file path="/a.dummy" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1382014771774" ignored="false" />
+    <file path="/EmailDto.scala" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1382014304546" ignored="false" />
+    <file path="/application.conf" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1382022978494" ignored="false" />
+    <file path="/Poller.scala" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1382023061561" ignored="false" />
+    <file path="/Sender.scala" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1382023071676" ignored="false" />
+    <file path="$PROJECT_DIR$/../ThirdPartyEmailSender/src/main/resources/application.conf" changelist="02e37d78-f1a5-46d2-9aa1-4f4fa6acb430" time="1382023184602" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +92,7 @@
       </breakpoint>
     </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -93,19 +102,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="build.sbt" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/build.sbt">
+      <file leaf-file-name="Poller.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/main/Poller.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="19" column="21" selection-start="615" selection-end="615" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#14#43#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EmailsToPollTasker.scala" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/main/EmailsToPollTasker.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="252" column="42" selection-start="8208" selection-end="8216" vertical-scroll-proportion="0.42226148">
+              <folding>
+                <element signature="e#14#60#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.conf" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="0" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plugins.sbt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/plugins.sbt">
+      <file leaf-file-name="build.sbt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.sbt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="10" column="1" selection-start="419" selection-end="419" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EmailDto.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/db/EmailDto.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="96" column="0" selection-start="3637" selection-end="3637" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -124,6 +164,21 @@
   <component name="GitLogSettings">
     <option name="myDateState">
       <MyDateState />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/untitled/src/main/java/Untitled.java" />
+        <option value="$PROJECT_DIR$/untitled/src/main/java/com/Untitled.java" />
+        <option value="$PROJECT_DIR$/.idea/compiler.xml" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/src/main/scala/db/EmailDto.scala" />
+        <option value="$PROJECT_DIR$/build.sbt" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.conf" />
+        <option value="$PROJECT_DIR$/src/main/scala/main/Poller.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/main/EmailsToPollTasker.scala" />
+      </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
@@ -155,7 +210,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="1" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -204,6 +259,102 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ThirdPartyEmailPoller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ThirdPartyEmailPoller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ThirdPartyEmailPoller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ThirdPartyEmailPoller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ThirdPartyEmailPoller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ThirdPartyEmailPoller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ThirdPartyEmailPoller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ThirdPartyEmailPoller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="project" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -214,21 +365,52 @@
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="Errors" />
+    <property name="options.lastSelected" value="org.jetbrains.plugins.scala.compiler.ScalaApplicationSettingsForm" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="FullScreen" value="false" />
+    <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Poller">
+    <configuration default="false" name="Poller" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="main.Poller" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="default-c9cc70" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -264,7 +446,14 @@
       <envs />
       <method />
     </configuration>
-    <list size="0" />
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Application.Poller" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Application.Poller" />
+      </list>
+    </recent_temporary>
     <configuration name="&lt;template&gt;" type="JUnit" default="true" selected="false">
       <option name="MAIN_CLASS_NAME" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -307,22 +496,22 @@
     <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24537487" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1664888" sideWeight="0.75462514" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1664888" sideWeight="0.600779" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39922103" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24537487" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -389,17 +578,123 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/project/plugins.sbt">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/main/Poller.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="610" selection-end="610" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#14#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/main/EmailsToPollTasker.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#14#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/db/EmailDto.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="0" selection-start="3455" selection-end="3455" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/main/Poller.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="5" selection-start="603" selection-end="603" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#14#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/main/EmailsToPollTasker.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="270" column="69" selection-start="8731" selection-end="8796" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#14#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/main/Poller.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="5" selection-start="603" selection-end="603" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#14#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/main/EmailsToPollTasker.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="270" column="69" selection-start="8731" selection-end="8796" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#14#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/plugins.sbt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="316" selection-end="316" vertical-scroll-proportion="0.17948718" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="656" selection-end="656" vertical-scroll-proportion="0.4871795" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/models/Email.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="6" selection-start="903" selection-end="903" vertical-scroll-proportion="0.33333334" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/db/EmailDto.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="96" column="0" selection-start="3637" selection-end="3637" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.sbt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="10" column="1" selection-start="419" selection-end="419" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="0" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/main/Poller.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="21" selection-start="615" selection-end="615" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#14#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/main/EmailsToPollTasker.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="252" column="42" selection-start="8208" selection-end="8216" vertical-scroll-proportion="0.42226148">
+          <folding>
+            <element signature="e#14#60#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -420,7 +715,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>Scala</last-edited>
+          <last-edited>Detection</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -444,7 +739,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.7</last-edited>
+          <last-edited>1.7.0_45</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -456,11 +751,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>default-c9cc70</last-edited>
+          <last-edited>default-c9cc70-build</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>

@@ -1,7 +1,6 @@
 {
 	"subject": null,
     "textContent": "Hello,\nWorld!",
-    "contentType": "text/plain",
     "from": {
         "email": "cbramdit@reportingfromtheborderland.net"
     },

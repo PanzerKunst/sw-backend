@@ -6,7 +6,8 @@ libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-actor" % "2.1.4",
     "com.github.seratch" %% "scalikejdbc" % "[1.6,)",
     "com.github.seratch" %% "scalikejdbc-config" % "[1.6,)",
-    "mysql" % "mysql-connector-java" % "5.1.26"
+    "mysql" % "mysql-connector-java" % "5.1.26",
+    "com.typesafe" % "config" % "[1.0,)"
 )
 
 seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)

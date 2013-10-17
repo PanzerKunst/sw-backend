@@ -7,90 +7,101 @@ import java.io.File
 import models.{InternetAddress, Email}
 import java.text.SimpleDateFormat
 import models.clientside.ClientSideEmail
+import db.EmailDto
+import scala.StringBuilder
 
 object EmailsToPollTasker extends Logging {
-  val THIRD_PARTY_EMAILS_ROOT_DIR = "/Users/blackbird/Desktop/vmail" //TODO "/mnt/vmail"
-
   val actor = Poller.system.actorOf(Props(new Actor {
     def receive = {
       case _ =>
-        for (accountDir <- new File(THIRD_PARTY_EMAILS_ROOT_DIR).listFiles) {
+        val thirdPartyEmailsRootDir = Poller.conf.getString("thirdPartyEmailsRootDir")
+
+        for (accountDir <- new File(thirdPartyEmailsRootDir).listFiles) {
           for (newEmailFile <- new File(accountDir.getAbsolutePath + "/new").listFiles) {
-            val source = Source.fromFile(newEmailFile.getAbsolutePath)
+            EmailDto.create(clientSideEmailFromFile(newEmailFile))
 
-            val clientSideEmail = new ClientSideEmail()
-
-            var i = 0
-            val lines = source.getLines()
-            var line: String = null
-            var contentType: String = null
-            var charset: Option[String] = None
-            var boundary: Option[String] = None
-
-            while (lines.hasNext && line != "") {
-              line = lines.next()
-
-              logger.info("line: " + line)
-
-              if (line.toLowerCase.startsWith(Email.HEADER_SUBJECT)) {
-                clientSideEmail.subject = Some(headerLineValue(line))
-              }
-              else if (line.toLowerCase.startsWith(Email.HEADER_CONTENT_TYPE)) {
-                contentType = contentTypeFromLineValue(headerLineValue(line))
-                charset = subHeaderFromLineValue(headerLineValue(line), "charset")
-                boundary = subHeaderFromLineValue(headerLineValue(line), "boundary")
-              }
-              else if (line.toLowerCase.startsWith(Email.HEADER_MESSAGE_ID)) {
-                clientSideEmail.messageId = Some(headerLineValue(line))
-              }
-              else if (line.toLowerCase.startsWith(Email.HEADER_FROM)) {
-                clientSideEmail.from = internetAddressFromLineValue(headerLineValue(line))
-              }
-              else if (line.toLowerCase.startsWith(Email.HEADER_SENDER)) {
-                clientSideEmail.sender = Some(internetAddressFromLineValue(headerLineValue(line)))
-              }
-              else if (line.toLowerCase.startsWith(Email.HEADER_DATE)) {
-                clientSideEmail.creationTimestamp = timestampFromLineValue(headerLineValue(line))
-              }
-              else if (line.toLowerCase.startsWith(Email.HEADER_TO)) {
-                clientSideEmail.to = internetAddressListFromFile(newEmailFile.getAbsolutePath, i)
-              }
-              else if (line.toLowerCase.startsWith(Email.HEADER_CC)) {
-                clientSideEmail.cc = internetAddressListFromFile(newEmailFile.getAbsolutePath, i)
-              }
-              else if (line.toLowerCase.startsWith(Email.HEADER_BCC)) {
-                clientSideEmail.bcc = internetAddressListFromFile(newEmailFile.getAbsolutePath, i)
-              }
-              else if (line.toLowerCase.startsWith(Email.HEADER_REFERENCES)) {
-                clientSideEmail.references = referencesFromFile(newEmailFile.getAbsolutePath, i)
-              }
-
-              // The header "To:" can sometimes be empty
-              else if (line.toLowerCase.startsWith(Email.HEADER_DELIVERED_TO)) {
-                clientSideEmail.to = internetAddressListFromFile(newEmailFile.getAbsolutePath, i)
-              }
-
-              i = i + 1
-            }
-
-            // Empty line -> body starts
-
-            if (contentType == Email.CONTENT_TYPE_TEXT) {
-              clientSideEmail.textContent = buildSimpleContentFromLines(lines)
-            }
-            else if (contentType == Email.CONTENT_TYPE_HTML) {
-              clientSideEmail.htmlContent = buildSimpleContentFromLines(lines)
-            }
-            else if (contentType == Email.CONTENT_TYPE_HTML_WITH_TEXT_FALLBACK && boundary.isDefined) {
-              clientSideEmail.textContent = contentFromMultipart(newEmailFile.getAbsolutePath, i, Email.CONTENT_TYPE_TEXT, boundary.get)
-              clientSideEmail.htmlContent = contentFromMultipart(newEmailFile.getAbsolutePath, i, Email.CONTENT_TYPE_HTML, boundary.get)
-            }
-
-            source.close()
+            // markIncomingEmailAsRead
+            newEmailFile.renameTo(new File(accountDir.getAbsolutePath + "/cur/" + newEmailFile.getName))
           }
         }
     }
   }))
+
+  private def clientSideEmailFromFile(newEmailFile: File): ClientSideEmail = {
+    val source = Source.fromFile(newEmailFile.getAbsolutePath)
+
+    val clientSideEmail = new ClientSideEmail()
+
+    var i = 0
+    val lines = source.getLines()
+    var line: String = null
+    var contentType: String = null
+    var charset: Option[String] = None
+    var boundary: Option[String] = None
+
+    while (lines.hasNext && line != "") {
+      line = lines.next()
+
+      if (line.toLowerCase.startsWith(Email.HEADER_SUBJECT)) {
+        clientSideEmail.subject = Some(headerLineValue(line))
+      }
+      else if (line.toLowerCase.startsWith(Email.HEADER_CONTENT_TYPE)) {
+        contentType = contentTypeFromLineValue(headerLineValue(line))
+        charset = subHeaderFromLineValue(headerLineValue(line), "charset")
+        boundary = subHeaderFromLineValue(headerLineValue(line), "boundary")
+      }
+      else if (line.toLowerCase.startsWith(Email.HEADER_MESSAGE_ID)) {
+        clientSideEmail.messageId = Some(headerLineValue(line))
+      }
+      else if (line.toLowerCase.startsWith(Email.HEADER_FROM)) {
+        clientSideEmail.from = internetAddressFromLineValue(headerLineValue(line))
+      }
+      else if (line.toLowerCase.startsWith(Email.HEADER_SENDER)) {
+        clientSideEmail.sender = Some(internetAddressFromLineValue(headerLineValue(line)))
+      }
+      else if (line.toLowerCase.startsWith(Email.HEADER_DATE)) {
+        clientSideEmail.creationTimestamp = timestampFromLineValue(headerLineValue(line))
+      }
+      else if (line.toLowerCase.startsWith(Email.HEADER_TO)) {
+        clientSideEmail.to = internetAddressListFromFile(newEmailFile.getAbsolutePath, i)
+      }
+      else if (line.toLowerCase.startsWith(Email.HEADER_CC)) {
+        clientSideEmail.cc = internetAddressListFromFile(newEmailFile.getAbsolutePath, i)
+      }
+      else if (line.toLowerCase.startsWith(Email.HEADER_BCC)) {
+        clientSideEmail.bcc = internetAddressListFromFile(newEmailFile.getAbsolutePath, i)
+      }
+      else if (line.toLowerCase.startsWith(Email.HEADER_REFERENCES)) {
+        clientSideEmail.references = referencesFromFile(newEmailFile.getAbsolutePath, i)
+      }
+
+      // The header "To:" can sometimes be empty
+      else if (line.toLowerCase.startsWith(Email.HEADER_DELIVERED_TO)) {
+        clientSideEmail.to = internetAddressListFromFile(newEmailFile.getAbsolutePath, i)
+      }
+
+      i = i + 1
+    }
+
+    // Empty line -> body starts
+
+    if (contentType == Email.CONTENT_TYPE_TEXT) {
+      clientSideEmail.textContent = buildSimpleContentFromLines(lines)
+    }
+    else if (contentType == Email.CONTENT_TYPE_HTML) {
+      clientSideEmail.htmlContent = buildSimpleContentFromLines(lines)
+    }
+    else if (contentType == Email.CONTENT_TYPE_MULTIPART_ALTERNATIVE && boundary.isDefined) {
+      clientSideEmail.textContent = contentFromMultipart(newEmailFile.getAbsolutePath, i, Email.CONTENT_TYPE_TEXT, boundary.get)
+      clientSideEmail.htmlContent = contentFromMultipart(newEmailFile.getAbsolutePath, i, Email.CONTENT_TYPE_HTML, boundary.get)
+    }
+
+    clientSideEmail.status = Email.STATUS_UNREAD
+
+    source.close()
+
+    clientSideEmail
+  }
 
   private def headerLineValue(line: String): String = {
     val trimmedLine = line.substring(line.indexOf(":") + 1).trim
@@ -217,32 +228,40 @@ object EmailsToPollTasker extends Logging {
       line = lines.next()
     }
 
-    while (lines.hasNext && line != "--" + boundary) {
+    var readContentType: String = null
+    var charset: Option[String] = None
+
+    while (readContentType != contentType) {
+      while (lines.hasNext && line != "--" + boundary) {
+        line = lines.next()
+      }
+
+      // Reading the line just after the boundary
+      line = lines.next()
+
+      readContentType = contentTypeFromLineValue(headerLineValue(line))
+      charset = subHeaderFromLineValue(headerLineValue(line), "charset")
+    }
+
+    // We need to read until the next blank line, this is where the content will start
+    while (!line.trim.isEmpty) {
       line = lines.next()
     }
 
-    // Reading the line just after the boundary
-    line = lines.next()
+    val stringBuilder = new StringBuilder
 
-    val readContentType = contentTypeFromLineValue(headerLineValue(line))
-    val charset = subHeaderFromLineValue(headerLineValue(line), "charset")
+    while (lines.hasNext && !line.contains(boundary)) {
+      line = lines.next()
 
-    var content = ""
-
-    if (readContentType == contentType) {
-      while (lines.hasNext && line != "--" + boundary) {
-        line = lines.next()
-
-        if (line != "--" + boundary) {
-          content = content + line + "\\n"
-        }
+      if (!line.contains(boundary)) {
+        stringBuilder.append(line).append('\n')
       }
     }
 
     source.close()
 
-    if (content != "") {
-      Some(content)
+    if (!stringBuilder.isEmpty) {
+      Some(stringBuilder.toString())
     }
     else {
       None
@@ -250,14 +269,14 @@ object EmailsToPollTasker extends Logging {
   }
 
   private def buildSimpleContentFromLines(lines: Iterator[String]): Option[String] = {
-    var content = ""
+    val stringBuilder = new StringBuilder
 
     while (lines.hasNext) {
-      content = content + lines.next() + "\\n"
+      stringBuilder.append(lines.next()).append('\n')
     }
 
-    if (content != "") {
-      Some(content)
+    if (!stringBuilder.isEmpty) {
+      Some(stringBuilder.toString())
     }
     else {
       None
@@ -265,6 +284,7 @@ object EmailsToPollTasker extends Logging {
   }
 
   private def timestampFromLineValue(lineValue: String): Long = {
-    new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z").parse(lineValue).getTime
+    // We divide by 1000 to convert ms to seconds
+    new SimpleDateFormat("E, d MMM yyyy HH:mm:ss Z").parse(lineValue).getTime / 1000
   }
 }
