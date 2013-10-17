@@ -1,33 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40fb6ad6-3851-477d-ad3c-8461d9cac53a" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\Pro\sw-backend\platformMocks\newEmailMissingContentType.json" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/models/Email.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/models/Email.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/db/EmailDto.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/db/EmailDto.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/main/EmailsToPollTasker.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/main/EmailsToPollTasker.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/main/Poller.scala" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/scala/main/Poller.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/main/Sender.scala" afterPath="$PROJECT_DIR$/src/main/scala/main/Sender.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/resources/application.conf" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/src/main/resources/application.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/build.sbt" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/build.sbt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/.idea/misc.xml" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailFromWrongSwAccount.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailFromWrongSwAccount.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingCreationTimestamp.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingCreationTimestamp.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingStatus.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingStatus.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingSwAccount.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingSwAccount.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailMissingTo.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailMissingTo.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailTo3rdParty.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailTo3rdParty.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithReferences.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithReferences.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBcc.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBcc.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBccEmpty.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWithToCcBccEmpty.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWrongContentType.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWrongContentType.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newEmailWrongStatus.json" afterPath="$PROJECT_DIR$/../../platformMocks/newEmailWrongStatus.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newHTMLEmail.json" afterPath="$PROJECT_DIR$/../../platformMocks/newHTMLEmail.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../platformMocks/newMinimalEmail.json" afterPath="$PROJECT_DIR$/../../platformMocks/newMinimalEmail.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ThirdPartyEmailPoller/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../ThirdPartyEmailPoller/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="40fb6ad6-3851-477d-ad3c-8461d9cac53a" name="Default" comment="" />
     <ignored path="ThirdPartyEmailSender.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="40fb6ad6-3851-477d-ad3c-8461d9cac53a" time="1382022992660" ignored="false" />
