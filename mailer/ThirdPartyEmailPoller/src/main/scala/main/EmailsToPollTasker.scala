@@ -3,12 +3,14 @@ package main
 import com.typesafe.scalalogging.slf4j.Logging
 import akka.actor.{Actor, Props}
 import scala.io.Source
-import java.io.File
-import models.{InternetAddress, Email}
+import java.io.{BufferedReader, InputStreamReader, File}
+import models.Email
 import java.text.SimpleDateFormat
 import models.clientside.ClientSideEmail
-import db.EmailDto
+import db._
 import scala.StringBuilder
+import models.InternetAddress
+import scala.Some
 
 object EmailsToPollTasker extends Logging {
   val actor = Poller.system.actorOf(Props(new Actor {
@@ -16,12 +18,40 @@ object EmailsToPollTasker extends Logging {
       case _ =>
         val thirdPartyEmailsRootDir = Poller.conf.getString("thirdPartyEmailsRootDir")
 
-        for (accountDir <- new File(thirdPartyEmailsRootDir).listFiles) {
-          for (newEmailFile <- new File(accountDir.getAbsolutePath + "/new").listFiles) {
-            EmailDto.create(clientSideEmailFromFile(newEmailFile))
+        val directoriesInsideThirdPartyEmailsRootDir = new File(thirdPartyEmailsRootDir).listFiles filter (file => file.isDirectory)
 
-            // markIncomingEmailAsRead
-            newEmailFile.renameTo(new File(accountDir.getAbsolutePath + "/cur/" + newEmailFile.getName))
+        for (accountDir <- directoriesInsideThirdPartyEmailsRootDir) {
+          val dirForAccountNewEmail = accountDir.getAbsolutePath + "/new/"
+
+          val filesInDirForAccountNewEmail = new File(dirForAccountNewEmail).listFiles
+
+          if (!filesInDirForAccountNewEmail.isEmpty) {
+            addPermissionsToReadAndMoveEmailFilesInsideDir(dirForAccountNewEmail)
+
+            for (newEmailFile <- filesInDirForAccountNewEmail) {
+              val clientSideEmail = clientSideEmailFromFile(newEmailFile)
+
+              EmailDto.create(clientSideEmail) match {
+                case Some(id) =>
+                  for (internetAddress <- clientSideEmail.to)
+                    ToDto.create(id, internetAddress)
+
+                  for (internetAddress <- clientSideEmail.cc)
+                    CcDto.create(id, internetAddress)
+
+                  for (internetAddress <- clientSideEmail.bcc)
+                    BccDto.create(id, internetAddress)
+
+                  for (messageId <- clientSideEmail.references)
+                    ReferencesDto.create(id, messageId)
+
+                case None => throw new Exception("Creation of an email did not return an ID!")
+              }
+
+              markIncomingEmailAsRead(newEmailFile, accountDir.getAbsolutePath)
+            }
+
+            resetPermissionsToMovedEmailFilesInsideDir(accountDir.getAbsolutePath + "/cur/")
           }
         }
     }
@@ -140,7 +170,7 @@ object EmailsToPollTasker extends Logging {
       lineValue
     }
     else {
-      lineValue.substring(0, emailStartIndex) + lineValue.substring(emailEndIndex + 1, lineValue.length)
+      lineValue.substring(emailStartIndex+1, emailEndIndex)
     }
   }
 
@@ -208,9 +238,17 @@ object EmailsToPollTasker extends Logging {
 
     var result = List(messageIdFromLineValue(headerLineValue(line)))
 
-    while (lines.hasNext && "^\\s".r.findFirstIn(line).isDefined) {
+    // read next lines
+    var isLineInteresting = true
+    while (lines.hasNext && isLineInteresting) {
       line = lines.next()
-      result = result :+ messageIdFromLineValue(line)
+
+      if ("^\\s.+".r.findFirstIn(line).isDefined) {
+        result = result :+ messageIdFromLineValue(line)
+      }
+      else {
+        isLineInteresting = false
+      }
     }
 
     source.close()
@@ -284,7 +322,57 @@ object EmailsToPollTasker extends Logging {
   }
 
   private def timestampFromLineValue(lineValue: String): Long = {
-    // We divide by 1000 to convert ms to seconds
-    new SimpleDateFormat("E, d MMM yyyy HH:mm:ss Z").parse(lineValue).getTime / 1000
+    new SimpleDateFormat("E, d MMM yyyy HH:mm:ss Z").parse(lineValue).getTime / 1000 // We divide by 1000 to convert ms to seconds
+  }
+
+  private def markIncomingEmailAsRead(newEmailFile: File, accountDirAbsolutePath: String) {
+    // Need to invoke a shell to run a piped command, or one containing the '*' wildcard. This command is used on the Mac laptop for testing
+    //runProcess(new ProcessBuilder("/bin/sh", "-c", "echo tigrou | sudo -S mv " + accountDirAbsolutePath + "/new/" + newEmailFile.getName + " " + accountDirAbsolutePath + "/cur/"))
+
+    // On the server we don't need to supply the password
+    runProcess(new ProcessBuilder("sudo", "mv", accountDirAbsolutePath + "/new/" + newEmailFile.getName, accountDirAbsolutePath + "/cur/"))
+  }
+
+  private def addPermissionsToReadAndMoveEmailFilesInsideDir(dirAbsolutePath: String) {
+    setPermissionsToFilesInsideDir(dirAbsolutePath, "666")
+  }
+
+  private def resetPermissionsToMovedEmailFilesInsideDir(dirAbsolutePath: String) {
+    setPermissionsToFilesInsideDir(dirAbsolutePath, "600")
+  }
+
+  private def setPermissionsToFilesInsideDir(dirAbsolutePath: String, ugoPermissions: String) {
+    // Need to invoke a shell to run a piped command, or one containing the '*' wildcard. This command is used on the Mac laptop for testing
+    //runProcess(new ProcessBuilder("/bin/sh", "-c", "echo tigrou | sudo -S chmod " + ugoPermissions + " " + dirAbsolutePath + "*"))
+
+    // On the server we don't need to supply the password
+    runProcess(new ProcessBuilder("/bin/sh", "-c", "sudo chmod " + ugoPermissions + " " + dirAbsolutePath + "*"))
+  }
+
+  private def runProcess(processBuilder: ProcessBuilder) {
+    processBuilder.redirectErrorStream(true)
+    val process = processBuilder.start()
+
+    printProcessOutput(process)
+
+    if (process.waitFor() != 0)
+      throw new OsCommandException
+  }
+
+  private def printProcessOutput(process: Process) {
+    val br = new BufferedReader(new InputStreamReader(process.getInputStream))
+    val builder = new StringBuilder()
+    var line: String = br.readLine()
+
+    while (line != null) {
+      builder.append(line)
+      builder.append(System.getProperty("line.separator"))
+
+      line = br.readLine()
+    }
+
+    System.out.println(builder.toString())
   }
 }
+
+class OsCommandException extends Exception
