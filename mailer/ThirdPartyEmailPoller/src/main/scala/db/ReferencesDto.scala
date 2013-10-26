@@ -24,4 +24,22 @@ object ReferencesDto extends Logging {
       c.close()
     }
   }
+
+  def create(emailId: Long, referencesSmtpMessageId: String): Option[Long] = {
+    implicit val c = ConnectionPool.borrow()
+
+    val query = """
+          insert into `references`(email_id, references_message_id)
+          values(""" + emailId + """,
+          """" + DbUtil.backslashQuotes(referencesSmtpMessageId) + """");"""
+
+    logger.info("ReferencesDto.create():" + query)
+
+    try {
+      SQL(query).executeInsert()
+    }
+    finally {
+      c.close()
+    }
+  }
 }

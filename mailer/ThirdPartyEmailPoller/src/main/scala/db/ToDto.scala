@@ -28,4 +28,27 @@ object ToDto extends Logging {
       c.close()
     }
   }
+
+  def create(emailId: Long, internetAddress: InternetAddress): Option[Long] = {
+    implicit val c = ConnectionPool.borrow()
+
+    var nameForQuery = "NULL"
+    if (internetAddress.name.isDefined && internetAddress.name.get != "")
+      nameForQuery = "\"" + DbUtil.backslashQuotes(internetAddress.name.get) + "\""
+
+    val query = """
+          insert into `to`(email_id, address, name)
+          values(""" + emailId + """,
+          """" + internetAddress.email + """",
+          """ + nameForQuery + """);"""
+
+    logger.info("ToDto.create():" + query)
+
+    try {
+      SQL(query).executeInsert()
+    }
+    finally {
+      c.close()
+    }
+  }
 }
