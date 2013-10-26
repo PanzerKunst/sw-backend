@@ -3,15 +3,15 @@ package models
 import play.api.libs.json.{Writes, JsValue, Json}
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 
-case class Account(
-                 @JsonDeserialize(contentAs = classOf[java.lang.Long])
-                 id: Option[Long],
+case class Account(@JsonDeserialize(contentAs = classOf[java.lang.Long])
+                   id: Option[Long],
 
-                 firstName: String,
-                 lastName: String,
-                 username: String,
-                 password: String,
-                 publicKey: String)
+                   firstName: String,
+                   lastName: String,
+                   username: String,
+                   password: String,
+                   publicKey: String,
+                   privateKey: Option[String])
 
 object Account {
   implicit val writes = new Writes[Account] {

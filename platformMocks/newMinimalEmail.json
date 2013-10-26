@@ -1,6 +1,7 @@
 {
 	"subject": null,
     "textContent": "Hello,\nWorld!",
+    "messageId": "1378885425.1378885425@reportingfromtheborderland.net",
     "from": {
         "email": "root@reportingfromtheborderland.net"
     },

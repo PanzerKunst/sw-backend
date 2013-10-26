@@ -28,7 +28,8 @@ object AccountDto {
             lastName = row[String]("last_name"),
             username = row[String]("username"),
             password = null,
-            publicKey = row[String]("public_key")
+            publicKey = row[String]("public_key"),
+            privateKey = None
           )
         ).toList
     }
@@ -39,18 +40,21 @@ object AccountDto {
       implicit c =>
 
         val query = """
-          insert into account(first_name, last_name, username, password, public_key)
-          values("""" + DbUtil.backslashQuotes(account.firstName) + """",
+          insert into account(first_name, last_name, username, password, public_key, private_key)
+            values("""" + DbUtil.backslashQuotes(account.firstName) + """",
             """" + DbUtil.backslashQuotes(account.lastName) + """",
             """" + DbUtil.backslashQuotes(account.username) + """",
             """" + DbUtil.backslashQuotes(account.password) + """",
-            {publicKey});"""
+            {publicKey},
+            {privateKey});"""
 
         Logger.info("AccountDto.create():" + query)
 
         try {
-          SQL(query).on("publicKey" -> account.publicKey)
-            .executeInsert()
+          SQL(query).on(
+            "publicKey" -> account.publicKey,
+            "privateKey" -> account.privateKey.getOrElse(null)
+          ).executeInsert()
         }
         catch {
           case msicve: MySQLIntegrityConstraintViolationException =>
@@ -73,12 +77,16 @@ object AccountDto {
           first_name = """" + DbUtil.backslashQuotes(account.firstName) + """",
           last_name = """" + DbUtil.backslashQuotes(account.lastName) + """",
           password = """" + DbUtil.backslashQuotes(account.password) + """",
-          public_key = {publicKey}
-          where id = """ + account.id + """;"""
+          public_key = {publicKey},
+          private_key = {privateKey}
+          where id = """ + account.id.get + """;"""
 
         Logger.info("AccountDto.update():" + query)
 
-        SQL(query).on("publicKey" -> account.publicKey).executeUpdate()
+        SQL(query).on(
+          "publicKey" -> account.publicKey,
+          "privateKey" -> account.privateKey.getOrElse(null)
+        ).executeUpdate()
     }
   }
 }

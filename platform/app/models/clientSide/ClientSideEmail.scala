@@ -20,7 +20,7 @@ class ClientSideEmail {
   var htmlContent: Option[String] = None
 
   @JsonProperty
-  var messageId: Option[String] = None
+  var messageId: String = _
 
   @JsonProperty
   var from: InternetAddress = _
@@ -31,6 +31,9 @@ class ClientSideEmail {
   @JsonProperty
   @JsonDeserialize(contentAs = classOf[java.lang.Long])
   var fromAccountId: Option[Long] = None
+
+  @JsonProperty
+  var encryptionPublicKey: Option[String] = None
 
   @JsonProperty
   @JsonDeserialize(contentAs = classOf[java.lang.Long])
@@ -67,10 +70,11 @@ class ClientSideEmail {
     this.subject = email.subject
     this.textContent = email.textContent
     this.htmlContent = email.htmlContent
-    this.messageId = Some(email.messageId)
+    this.messageId = email.messageId
     this.from = email.from
     this.sender = email.sender
     this.fromAccountId = email.fromAccountId
+    this.encryptionPublicKey = email.encryptionPublicKey
     this.creationTimestamp = email.creationTimestamp
     this.status = email.status
 
@@ -83,7 +87,8 @@ class ClientSideEmail {
   }
 
   def validate: Option[String] = {
-    if (this.from == null ||
+    if (this.messageId == null ||
+      this.from == null ||
       this.replyTo == null ||
       !this.fromAccountId.isDefined ||
       this.creationTimestamp == 0.toLong ||
@@ -126,6 +131,7 @@ object ClientSideEmail {
         "replyTo" -> email.replyTo,
         "sender" -> email.sender,
         "fromAccountId" -> email.fromAccountId,
+        "encryptionPublicKey" -> email.encryptionPublicKey,
         "creationTimestamp" -> email.creationTimestamp,
         "status" -> email.status,
         "to" -> email.to,

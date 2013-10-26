@@ -19,6 +19,7 @@ DELETE  /api/db/admin               controllers.api.DbAdminApi.dropTables
 POST    /api/accounts               controllers.api.AccountApi.create
 GET     /api/accounts               controllers.api.AccountApi.get
 GET     /api/accounts/:id           controllers.api.AccountApi.getOfId(id: Long)
+PUT     /api/accounts/:id           controllers.api.AccountApi.update(id: Long)
 
 POST    /api/emails                 controllers.api.EmailApi.create
 GET     /api/emails                 controllers.api.EmailApi.get

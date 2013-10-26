@@ -27,11 +27,15 @@ object AccountApi extends Controller {
       }
   }
 
-  def update = Action(parse.json) {
+  def update(id: Long) = Action(parse.json) {
     implicit request =>
 
-      val user = JsonUtil.deserialize[Account](request.body.toString())
-      AccountDto.update(user)
+      val account = JsonUtil.deserialize[Account](request.body.toString())
+
+      // The ID passed as URL parameter takes precedence
+      val accountWithEnforcedId = account.copy(id = Some(id))
+
+      AccountDto.update(accountWithEnforcedId)
       Ok
   }
 

@@ -41,6 +41,7 @@ object DbAdmin {
             username VARCHAR(64) NOT NULL,
             password VARCHAR(1024) NOT NULL,
             public_key VARCHAR(10240) NOT NULL,
+            private_key VARCHAR(10240),
             PRIMARY KEY (id),
             UNIQUE INDEX unique_username (username)
           ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -60,18 +61,18 @@ object DbAdmin {
           CREATE TABLE email (
             id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             subject VARCHAR(128),
-            text_content TEXT,
-            html_content TEXT,
+            text_content MEDIUMTEXT,
+            html_content MEDIUMTEXT,
             message_id VARCHAR(128) NOT NULL,
             from_address VARCHAR(128) NOT NULL,
             from_name VARCHAR(128),
             sender_address VARCHAR(128),
             sender_name VARCHAR(128),
             from_account_id BIGINT UNSIGNED,
+            encryption_public_key VARCHAR(10240),
             creation_timestamp INT UNSIGNED NOT NULL,
             status VARCHAR(16), /* DRAFT, TO_SEND, SENT, UNREAD, READ, ARCHIVED */
             PRIMARY KEY (id),
-            UNIQUE INDEX unique_message_id (message_id),
             CONSTRAINT fk_account FOREIGN KEY (from_account_id) REFERENCES account (id)
           ) ENGINE=INNODB DEFAULT CHARSET=utf8;
                     """

@@ -17,7 +17,8 @@ object EmailDto {
       implicit c =>
 
         val query = """
-          SELECT id, subject, text_content, html_content, message_id, from_address, from_name, sender_address, sender_name, from_account_id, creation_timestamp, status
+          SELECT id, subject, text_content, html_content, message_id, from_address, from_name, sender_address,
+          sender_name, from_account_id, encryption_public_key, creation_timestamp, status
           FROM email """ + DbUtil.generateWhereClause(filters) + """
           order by creation_timestamp desc;"""
 
@@ -45,6 +46,7 @@ object EmailDto {
               case Some(fromAccountId) => Some(fromAccountId.longValue())
               case None => None
             },
+            encryptionPublicKey = row[Option[String]]("encryption_public_key"),
             creationTimestamp = row[Long]("creation_timestamp"),
             status = row[String]("status")
           )
@@ -62,7 +64,8 @@ object EmailDto {
         }
 
         val query = """
-          SELECT id, subject, text_content, html_content, message_id, from_address, from_name, sender_address, sender_name, from_account_id, creation_timestamp, status
+          SELECT id, subject, text_content, html_content, message_id, from_address, from_name, sender_address,
+          sender_name, from_account_id, encryption_public_key, creation_timestamp, status
           FROM email
           WHERE from_account_id = """ + accountId + """
           AND status in (""" + statusesForQuery + """)
@@ -92,6 +95,7 @@ object EmailDto {
               case Some(fromAccountId) => Some(fromAccountId.longValue())
               case None => None
             },
+            encryptionPublicKey = row[Option[String]]("encryption_public_key"),
             creationTimestamp = row[Long]("creation_timestamp"),
             status = row[String]("status")
           )
@@ -141,7 +145,8 @@ object EmailDto {
           }
 
           val query = """
-          SELECT id, subject, text_content, html_content, message_id, from_address, from_name, sender_address, sender_name, from_account_id, creation_timestamp, status
+          SELECT id, subject, text_content, html_content, message_id, from_address, from_name, sender_address,
+          sender_name, from_account_id, encryption_public_key, creation_timestamp, status
           FROM email where id in (""" + idsForQuery + """)
           order by creation_timestamp desc;"""
 
@@ -169,6 +174,7 @@ object EmailDto {
                 case Some(fromAccountId) => Some(fromAccountId.longValue())
                 case None => None
               },
+              encryptionPublicKey = row[Option[String]]("encryption_public_key"),
               creationTimestamp = row[Long]("creation_timestamp"),
               status = row[String]("status")
             )
@@ -201,26 +207,29 @@ object EmailDto {
         }
 
         val query = """
-                       insert into email(subject, text_content, html_content, message_id, from_address, from_name, sender_address, sender_name, from_account_id, creation_timestamp, status)
+          insert into email(subject, text_content, html_content, message_id, from_address, from_name, sender_address,
+          sender_name, from_account_id, encryption_public_key, creation_timestamp, status)
           values(""" + subjectForQuery + """,
           {textContent},
           {htmlContent},
-          """" + Email.generateMessageId() + """",
+          """" + email.messageId + """",
           """" + email.from.email + """",
           """ + fromNameForQuery + """,
           """ + senderAddressForQuery + """,
           """ + senderNameForQuery + """,
           """ + email.fromAccountId.getOrElse("NULL") + """,
+          {encryptionPublicKey},
           """ + email.creationTimestamp + """,
           """" + email.status + """");"""
 
         Logger.info("EmailDto.create():" + query)
 
         try {
-          // We need to use "on" otherwise the new lines inside the "textContentForQuery" and "htmlContentForQuery" are removed
+          // We need to use "on" otherwise the new lines inside the "textContentForQuery", "htmlContentForQuery" and "encryptionPublicKey" are removed
           SQL(query).on(
             "textContent" -> email.textContent,
-            "htmlContent" -> email.htmlContent
+            "htmlContent" -> email.htmlContent,
+            "encryptionPublicKey" -> email.encryptionPublicKey
           ).executeInsert()
         }
         catch {
