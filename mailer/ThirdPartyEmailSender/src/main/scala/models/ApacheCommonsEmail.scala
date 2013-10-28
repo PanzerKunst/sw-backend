@@ -95,22 +95,28 @@ class ApacheCommonsEmail {
   private def textContentWithNotificationOfAccounts(textContent: Option[String]): Option[String] = {
     textContent match {
       case None => None
-      case Some(content) => Some(content + "\n" + notificationOfAccountsMessage)
+      case Some(content) => notificationOfAccountsMessage match {
+        case Some(notificationOfAccountsMessage) => Some(content + "\n" + notificationOfAccountsMessage)
+        case None => Some(content)
+      }
     }
   }
 
   private def htmlContentWithNotificationOfAccounts(htmlContent: Option[String]): Option[String] = {
     htmlContent match {
       case None => None
-      case Some(content) => Some(content + "<p style='font-style: italic;'>" + notificationOfAccountsMessage + "</p>")
+      case Some(content) => notificationOfAccountsMessage match {
+        case Some(notificationOfAccountsMessage) => Some(content + "<p style='font-style: italic;'>" + notificationOfAccountsMessage + "</p>")
+        case None => Some(content)
+      }
     }
   }
 
-  private def notificationOfAccountsMessage: String = {
+  private def notificationOfAccountsMessage: Option[String] = {
     numberOfAccountsAmongRecipients match {
-      case 0 => null
-      case 1 => "Note: one @" + SenderEmailService.MAILER_DOMAIN + " user was also recipient of this message. This user received an encrypted copy of this message, and for security reasons his or her address is not in the list of recipients."
-      case _ => "Note: " + numberOfAccountsAmongRecipients + " @" + SenderEmailService.MAILER_DOMAIN + " users were also recipients of this message. These " + numberOfAccountsAmongRecipients + " users received an encrypted copy of this message, and for security reasons their address is not in the list of recipients."
+      case 0 => None
+      case 1 => Some("Note: one @" + SenderEmailService.MAILER_DOMAIN + " user was also recipient of this message. This user received an encrypted copy of this message, and for security reasons his or her address is not in the list of recipients.")
+      case _ => Some("Note: " + numberOfAccountsAmongRecipients + " @" + SenderEmailService.MAILER_DOMAIN + " users were also recipients of this message. These " + numberOfAccountsAmongRecipients + " users received an encrypted copy of this message, and for security reasons their address is not in the list of recipients.")
     }
   }
 }
