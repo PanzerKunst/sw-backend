@@ -28,8 +28,9 @@ object AuthTasker {
         val allExistingUsernames = AccountDto.getAllUsernames
         val usernamesToKeep = AuthHelper.liveAccessTokens.keys.filter(clientIdentifier => allExistingUsernames.contains(clientIdentifier))
 
-        for (username <- usernamesToKeep)
-          AuthHelper.liveAccessTokens -= username
+        for ((clientIdentifier, tokenPair) <- AuthHelper.liveAccessTokens)
+          if (!usernamesToKeep.toList.contains(clientIdentifier))
+            AuthHelper.liveAccessTokens -= clientIdentifier
     }
   }))
 }
