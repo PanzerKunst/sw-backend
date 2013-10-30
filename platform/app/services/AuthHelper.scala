@@ -186,7 +186,6 @@ object AuthHelper {
         None
       case Some(clientSharedSecret) =>
         val text = requestMethod + "&" + uri
-
         var key = clientSharedSecret + "&"
 
         if (tokenSharedSecret.isDefined) {
