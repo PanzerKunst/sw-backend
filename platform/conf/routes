@@ -12,6 +12,10 @@ GET     /robots.txt                 controllers.Assets.at(path="/public", file="
 # Pages
 GET     /                           controllers.Application.index
 
+# Auth
+GET     /access-token               controllers.Authenticator.generateToken
+DELETE  /access-token               controllers.Authenticator.revokeToken
+
 # API
 POST    /api/db/admin               controllers.api.DbAdminApi.createTables
 DELETE  /api/db/admin               controllers.api.DbAdminApi.dropTables

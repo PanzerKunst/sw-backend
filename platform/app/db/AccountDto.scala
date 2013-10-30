@@ -89,4 +89,23 @@ object AccountDto {
         ).executeUpdate()
     }
   }
+
+  def getPasswordForUsername(username: String): Option[String] = {
+    DB.withConnection {
+      implicit c =>
+
+        val query = """
+          select password
+          from account where username = '""" + username + "';"
+
+        val rows = SQL(query)()
+
+        if (!rows.isEmpty) {
+          val firstRow = rows.head
+          Some(firstRow[String]("password"))
+        }
+        else
+          None
+    }
+  }
 }
