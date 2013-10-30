@@ -3,11 +3,12 @@ package services
 import akka.actor.{Actor, Props, ActorSystem}
 import java.util.{Calendar, GregorianCalendar}
 import play.Play
+import db.AccountDto
 
 object AuthTasker {
   val system = ActorSystem("AuthTaskerSystem")
 
-  val actor = system.actorOf(Props(new Actor {
+  val nonesCleanerActor = system.actorOf(Props(new Actor {
     def receive = {
       case _ =>
         val lastRetainedTime = new GregorianCalendar()
@@ -18,6 +19,17 @@ object AuthTasker {
         for ((nonce, timestamp) <- AuthHelper.usedNonces)
           if (timestamp < timestampOfLastRetainedTimeInSeconds)
             AuthHelper.usedNonces -= nonce
+    }
+  }))
+
+  val tokenCleanerActor = system.actorOf(Props(new Actor {
+    def receive = {
+      case _ =>
+        val allExistingUsernames = AccountDto.getAllUsernames
+        val usernamesToKeep = AuthHelper.liveAccessTokens.keys.filter(clientIdentifier => allExistingUsernames.contains(clientIdentifier))
+
+        for (username <- usernamesToKeep)
+          AuthHelper.liveAccessTokens -= username
     }
   }))
 }

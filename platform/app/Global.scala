@@ -8,14 +8,25 @@ object Global extends GlobalSettings {
 
   override def onStart(app: Application) {
     runAuthNonesCleaner()
+    runAuthTokenCleaner()
   }
 
   private def runAuthNonesCleaner() {
-    //This will schedule to send a msg to the AuthTasker.actor after 0ms repeating every second
+    //This will schedule to send a msg to the AuthTasker.nonesCleanerActor after 0ms repeating every second
     val cancellable = AuthTasker.system.scheduler.schedule(
       0 milliseconds,
       1 second,
-      AuthTasker.actor,
+      AuthTasker.nonesCleanerActor,
+      None
+    )
+  }
+
+  private def runAuthTokenCleaner() {
+    //This will schedule to send a msg to the AuthTasker.tokenCleanerActor after 0ms repeating every 10 minutes
+    val cancellable = AuthTasker.system.scheduler.schedule(
+      0 milliseconds,
+      10 minutes,
+      AuthTasker.tokenCleanerActor,
       None
     )
   }

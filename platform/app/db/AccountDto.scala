@@ -108,4 +108,19 @@ object AccountDto {
           None
     }
   }
+
+  def getAllUsernames: List[String] = {
+    DB.withConnection {
+      implicit c =>
+
+        val query = """
+          select distinct username from account;"""
+
+        Logger.info("AccountDto.getAllUsernames():" + query)
+
+        SQL(query)().map(row =>
+          row[String]("username")
+        ).toList
+    }
+  }
 }

@@ -9,8 +9,8 @@ import play.mvc.Http.Status
 import models.OauthAccessToken
 
 object AuthHelper {
-  var usedNonces: Map[String, Long] = Map()
-  var liveAccessTokens: Map[String, OauthAccessToken] = Map()
+  var usedNonces: Map[String, Long] = Map() // Map[nonce, timestamp]
+  var liveAccessTokens: Map[String, OauthAccessToken] = Map() // Map[clientIdentifier, oauthAccessToken]
 
   def generateToken(headers: Headers): OauthAccessToken = {
     val authorizationHeader = getAuthorizationHeader(headers).get
