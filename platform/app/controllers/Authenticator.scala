@@ -1,29 +1,35 @@
 package controllers
 
 import play.api.mvc._
-import services.AuthHelper
 import play.mvc.Http
 import play.api.libs.json.Json
+import services.auth.helper.AuthHelper
+import services.GlobalServices
 
 object Authenticator extends Controller {
   def generateToken = Action {
     implicit request =>
-      AuthHelper.checkTokenRequestAuthentication(request.method, request.uri, request.headers) match {
-        case Http.Status.BAD_REQUEST => BadRequest
-        case Http.Status.UNAUTHORIZED => Unauthorized
-        case _ =>
-          Ok(Json.toJson(AuthHelper.generateToken(request.headers)))
-      }
+      val authenticationResult = GlobalServices.authHelper.checkTokenRequestAuthentication(request.method, request.uri, request.headers)
+
+      if (authenticationResult.httpReturnCode == Http.Status.BAD_REQUEST)
+        BadRequest
+      else if (authenticationResult.httpReturnCode == Http.Status.UNAUTHORIZED)
+        Unauthorized(authenticationResult.errorMessage.get)
+      else
+        Ok(Json.toJson(GlobalServices.authHelper.generateToken(request.headers)))
   }
 
   def revokeToken = Action {
     implicit request =>
-      AuthHelper.checkRequestAuthentication(request.method, request.uri, request.headers) match {
-        case Http.Status.BAD_REQUEST => BadRequest
-        case Http.Status.UNAUTHORIZED => Unauthorized
-        case _ =>
-          AuthHelper.revokeToken(request.headers)
-          Ok
+      val authenticationResult = GlobalServices.authHelper.checkRequestAuthentication(request.method, request.uri, request.headers)
+
+      if (authenticationResult.httpReturnCode == Http.Status.BAD_REQUEST)
+        BadRequest
+      else if (authenticationResult.httpReturnCode == Http.Status.UNAUTHORIZED)
+        Unauthorized(authenticationResult.errorMessage.get)
+      else {
+        GlobalServices.authHelper.revokeToken(request.headers)
+        Ok
       }
   }
 }

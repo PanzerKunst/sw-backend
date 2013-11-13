@@ -1,7 +1,5 @@
 package main
 
-import com.typesafe.scalalogging.slf4j.Logging
-import akka.actor.{Actor, Props}
 import scala.io.Source
 import java.io.{BufferedReader, InputStreamReader, File}
 import models.Email
@@ -11,51 +9,58 @@ import db._
 import scala.StringBuilder
 import models.InternetAddress
 import scala.Some
+import java.util.TimerTask
+import com.typesafe.config.ConfigFactory
 
-object EmailsToPollTasker extends Logging {
-  val actor = Poller.system.actorOf(Props(new Actor {
-    def receive = {
-      case _ =>
-        val thirdPartyEmailsRootDir = Poller.conf.getString("thirdPartyEmailsRootDir")
+object EmailsToPollTasker extends TimerTask {
+  val thirdPartyEmailsRootDir = ConfigFactory.load().getString("thirdPartyEmailsRootDir")
 
-        val directoriesInsideThirdPartyEmailsRootDir = new File(thirdPartyEmailsRootDir).listFiles filter (file => file.isDirectory)
+  var isRunning = false
 
-        for (accountDir <- directoriesInsideThirdPartyEmailsRootDir) {
-          val dirForAccountNewEmail = accountDir.getAbsolutePath + "/new/"
+  def run() {
+    if (!isRunning) {
+      isRunning = true
 
-          val filesInDirForAccountNewEmail = new File(dirForAccountNewEmail).listFiles
+      val directoriesInsideThirdPartyEmailsRootDir = new File(thirdPartyEmailsRootDir).listFiles filter (file => file.isDirectory)
 
-          if (!filesInDirForAccountNewEmail.isEmpty) {
-            addPermissionsToReadAndMoveEmailFilesInsideDir(dirForAccountNewEmail)
+      for (accountDir <- directoriesInsideThirdPartyEmailsRootDir) {
+        val dirForAccountNewEmail = accountDir.getAbsolutePath + "/new/"
 
-            for (newEmailFile <- filesInDirForAccountNewEmail) {
-              val clientSideEmail = clientSideEmailFromFile(newEmailFile)
+        val filesInDirForAccountNewEmail = new File(dirForAccountNewEmail).listFiles
 
-              EmailDto.create(clientSideEmail) match {
-                case Some(id) =>
-                  for (internetAddress <- clientSideEmail.to)
-                    ToDto.create(id, internetAddress)
+        if (!filesInDirForAccountNewEmail.isEmpty) {
+          addPermissionsToReadAndMoveEmailFilesInsideDir(dirForAccountNewEmail)
 
-                  for (internetAddress <- clientSideEmail.cc)
-                    CcDto.create(id, internetAddress)
+          for (newEmailFile <- filesInDirForAccountNewEmail) {
+            val clientSideEmail = clientSideEmailFromFile(newEmailFile)
 
-                  for (internetAddress <- clientSideEmail.bcc)
-                    BccDto.create(id, internetAddress)
+            EmailDto.create(clientSideEmail) match {
+              case Some(id) =>
+                for (internetAddress <- clientSideEmail.to)
+                  ToDto.create(id, internetAddress)
 
-                  for (messageId <- clientSideEmail.references)
-                    ReferencesDto.create(id, messageId)
+                for (internetAddress <- clientSideEmail.cc)
+                  CcDto.create(id, internetAddress)
 
-                case None => throw new Exception("Creation of an email did not return an ID!")
-              }
+                for (internetAddress <- clientSideEmail.bcc)
+                  BccDto.create(id, internetAddress)
 
-              markIncomingEmailAsRead(newEmailFile, accountDir.getAbsolutePath)
+                for (messageId <- clientSideEmail.references)
+                  ReferencesDto.create(id, messageId)
+
+              case None => throw new Exception("Creation of an email did not return an ID!")
             }
 
-            resetPermissionsToMovedEmailFilesInsideDir(accountDir.getAbsolutePath + "/cur/")
+            markIncomingEmailAsRead(newEmailFile, accountDir.getAbsolutePath)
           }
+
+          resetPermissionsToMovedEmailFilesInsideDir(accountDir.getAbsolutePath + "/cur/")
         }
+      }
+
+      isRunning = false
     }
-  }))
+  }
 
   private def clientSideEmailFromFile(newEmailFile: File): ClientSideEmail = {
     val source = Source.fromFile(newEmailFile.getAbsolutePath)

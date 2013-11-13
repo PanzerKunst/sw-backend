@@ -13,7 +13,7 @@ GET     /robots.txt                 controllers.Assets.at(path="/public", file="
 GET     /                           controllers.Application.index
 
 # Auth
-GET     /access-token               controllers.Authenticator.generateToken
+POST    /access-token               controllers.Authenticator.generateToken
 DELETE  /access-token               controllers.Authenticator.revokeToken
 
 # API
@@ -28,3 +28,4 @@ PUT     /api/accounts/:id           controllers.api.AccountApi.update(id: Long)
 POST    /api/emails                 controllers.api.EmailApi.create
 GET     /api/emails                 controllers.api.EmailApi.get
 GET     /api/emails/:id             controllers.api.EmailApi.getOfId(id: Long)
+DELETE  /api/emails/:id             controllers.api.EmailApi.delete(id:Long)
