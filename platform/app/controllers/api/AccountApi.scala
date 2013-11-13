@@ -1,17 +1,17 @@
 package controllers.api
 
 import models.Account
-import services.JsonUtil
+import services.{GlobalServices, JsonUtil}
 import play.api.mvc.{Action, Controller}
 import db.{PostfixAccountDto, AccountDto}
 import play.api.libs.json.Json
+import play.mvc.Http
 
 object AccountApi extends Controller {
   val HTTP_STATUS_CODE_USERNAME_ALREADY_TAKEN = 520
 
   def create = Action(parse.json) {
     implicit request =>
-
       val account = JsonUtil.deserialize[Account](request.body.toString())
       try {
         AccountDto.create(account) match {
@@ -29,49 +29,104 @@ object AccountApi extends Controller {
 
   def update(id: Long) = Action(parse.json) {
     implicit request =>
+      val authenticationResult = GlobalServices.authHelper.checkRequestAuthentication(request.method, request.uri, request.headers)
 
-      val account = JsonUtil.deserialize[Account](request.body.toString())
+      if (authenticationResult.httpReturnCode == Http.Status.BAD_REQUEST)
+        BadRequest
+      else if (authenticationResult.httpReturnCode == Http.Status.UNAUTHORIZED)
+        Unauthorized(authenticationResult.errorMessage.get)
+      else {
+        // Let's start by retrieving the account in DB for that ID
+        AccountDto.getOfId(id) match {
+          case None => BadRequest("No account found for ID " + id)
+          case Some(accountInDb) =>
+            val authorizationHeader = GlobalServices.authHelper.getAuthorizationHeader(request.headers).get
+            val clientIdentifier = GlobalServices.authHelper.getSubHeader(authorizationHeader, "oauth_consumer_key").get
 
-      // The ID passed as URL parameter takes precedence
-      val accountWithEnforcedId = account.copy(id = Some(id))
+            if (clientIdentifier != accountInDb.username)
+              Forbidden("Account with ID '" + id + "' is not yours")
+            else {
+              val accountInRequest = JsonUtil.deserialize[Account](request.body.toString())
 
-      AccountDto.update(accountWithEnforcedId)
-      Ok
+              if (accountInDb.username != accountInRequest.username) {
+                Forbidden("You're not allowed to change username")
+              }
+              else if (id != accountInRequest.id.get) {
+                Forbidden("The ID in the URL doesn't match the one in the JSON")
+              }
+              else {
+                AccountDto.update(accountInRequest)
+                Ok(Json.toJson(accountInRequest))
+              }
+            }
+        }
+      }
   }
 
   def get = Action {
     implicit request =>
+      val authenticationResult = GlobalServices.authHelper.checkRequestAuthentication(request.method, request.uri, request.headers)
 
-      var filtersMap = Map[String, String]()
-
-      if (request.queryString.contains("username")) {
-        val username = request.queryString.get("username").get.head
-        filtersMap += ("username" -> username)
-      }
-
-      if (filtersMap.size == 0)
-        Forbidden
+      if (authenticationResult.httpReturnCode == Http.Status.BAD_REQUEST)
+        BadRequest
+      else if (authenticationResult.httpReturnCode == Http.Status.UNAUTHORIZED)
+        Unauthorized(authenticationResult.errorMessage.get)
       else {
-        val matchingUsers = AccountDto.get(Some(filtersMap))
+        var filtersMap = Map[String, String]()
 
-        if (matchingUsers.isEmpty)
-          NoContent
-        else
-          Ok(Json.toJson(matchingUsers))
+        if (request.queryString.contains("username")) {
+          val username = request.queryString.get("username").get.head
+          filtersMap += ("username" -> username)
+        }
+
+        if (filtersMap.size == 0)
+          Forbidden("You need to specify 'username' as a query string")
+        else {
+          val matchingAccounts = AccountDto.get(Some(filtersMap))
+
+          if (matchingAccounts.isEmpty)
+            NoContent
+          else {
+            val authorizationHeader = GlobalServices.authHelper.getAuthorizationHeader(request.headers).get
+            val clientIdentifier = GlobalServices.authHelper.getSubHeader(authorizationHeader, "oauth_consumer_key").get
+
+            // We hide privateKey if the caller is not the same account
+            val accountsToReturn = for (account <- matchingAccounts) yield {
+              if (clientIdentifier != account.username)
+                account.copy(privateKey = None)
+              else
+                account
+            }
+
+            Ok(Json.toJson(accountsToReturn))
+          }
+        }
       }
   }
 
   def getOfId(id: Long) = Action {
     implicit request =>
+      val authenticationResult = GlobalServices.authHelper.checkRequestAuthentication(request.method, request.uri, request.headers)
 
-      val filters = Some(Map("id" -> id.toString))
-
-      val matchingUsers = AccountDto.get(filters)
-
-      if (matchingUsers.isEmpty)
-        NoContent
+      if (authenticationResult.httpReturnCode == Http.Status.BAD_REQUEST)
+        BadRequest
+      else if (authenticationResult.httpReturnCode == Http.Status.UNAUTHORIZED)
+        Unauthorized(authenticationResult.errorMessage.get)
       else
-        Ok(Json.toJson(matchingUsers.head))
+        AccountDto.getOfId(id) match {
+          case None => NoContent
+          case Some(account) =>
+            val authorizationHeader = GlobalServices.authHelper.getAuthorizationHeader(request.headers).get
+            val clientIdentifier = GlobalServices.authHelper.getSubHeader(authorizationHeader, "oauth_consumer_key").get
+
+            // We hide privateKey if the caller is not the same account
+            val accountToReturn = if (clientIdentifier != account.username)
+              account.copy(privateKey = None)
+            else
+              account
+
+            Ok(Json.toJson(accountToReturn))
+        }
   }
 }
 

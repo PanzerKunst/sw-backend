@@ -12,6 +12,10 @@ GET     /robots.txt                 controllers.Assets.at(path="/public", file="
 # Pages
 GET     /                           controllers.Application.index
 
+# Auth
+POST    /access-token               controllers.Authenticator.generateToken
+DELETE  /access-token               controllers.Authenticator.revokeToken
+
 # API
 POST    /api/db/admin               controllers.api.DbAdminApi.createTables
 DELETE  /api/db/admin               controllers.api.DbAdminApi.dropTables
@@ -24,3 +28,4 @@ PUT     /api/accounts/:id           controllers.api.AccountApi.update(id: Long)
 POST    /api/emails                 controllers.api.EmailApi.create
 GET     /api/emails                 controllers.api.EmailApi.get
 GET     /api/emails/:id             controllers.api.EmailApi.getOfId(id: Long)
+DELETE  /api/emails/:id             controllers.api.EmailApi.delete(id:Long)

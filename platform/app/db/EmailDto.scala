@@ -243,4 +243,23 @@ object EmailDto {
         }
     }
   }
+
+  def delete(email: Email) {
+    DB.withConnection {
+      implicit c =>
+
+        val query = """
+                      delete from email
+          where id = """ + email.id + """;"""
+
+        Logger.info("EmailDto.delete():" + query)
+
+        SQL(query).execute()
+    }
+  }
+
+  def getOfId(id: Long): Option[Email] = {
+    val filters = Some(Map("id" -> id.toString))
+    get(filters).headOption
+  }
 }

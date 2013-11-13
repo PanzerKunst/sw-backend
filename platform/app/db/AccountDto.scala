@@ -16,7 +16,7 @@ object AccountDto {
       implicit c =>
 
         val query = """
-          select id, first_name, last_name, username, public_key
+          select id, first_name, last_name, username, public_key, private_key
           from account """ + DbUtil.generateWhereClause(filters) + ";"
 
         Logger.info("AccountDto.get():" + query)
@@ -29,7 +29,7 @@ object AccountDto {
             username = row[String]("username"),
             password = null,
             publicKey = row[String]("public_key"),
-            privateKey = None
+            privateKey = row[Option[String]]("private_key")
           )
         ).toList
     }
@@ -72,11 +72,17 @@ object AccountDto {
     DB.withConnection {
       implicit c =>
 
-        val query = """
+        var query = """
           update account set
           first_name = """" + DbUtil.backslashQuotes(account.firstName) + """",
-          last_name = """" + DbUtil.backslashQuotes(account.lastName) + """",
-          password = """" + DbUtil.backslashQuotes(account.password) + """",
+          last_name = """" + DbUtil.backslashQuotes(account.lastName) + """","""
+
+        if (account.password != null) {
+          query += """
+            password = """" + DbUtil.backslashQuotes(account.password) + """","""
+        }
+
+        query += """
           public_key = {publicKey},
           private_key = {privateKey}
           where id = """ + account.id.get + """;"""
@@ -88,5 +94,49 @@ object AccountDto {
           "privateKey" -> account.privateKey.getOrElse(null)
         ).executeUpdate()
     }
+  }
+
+  def getPasswordForUsername(username: String): Option[String] = {
+    DB.withConnection {
+      implicit c =>
+
+        val query = """
+          select password
+          from account where username = '""" + username + "';"
+
+        val rows = SQL(query)()
+
+        if (!rows.isEmpty) {
+          val firstRow = rows.head
+          Some(firstRow[String]("password"))
+        }
+        else
+          None
+    }
+  }
+
+  def getAllUsernames: List[String] = {
+    DB.withConnection {
+      implicit c =>
+
+        val query = """
+          select distinct username from account;"""
+
+        Logger.info("AccountDto.getAllUsernames():" + query)
+
+        SQL(query)().map(row =>
+          row[String]("username")
+        ).toList
+    }
+  }
+
+  def getOfId(id: Long): Option[Account] = {
+    val filters = Some(Map("id" -> id.toString))
+    get(filters).headOption
+  }
+
+  def getOfUsername(username: String): Option[Account] = {
+    val filters = Some(Map("username" -> username))
+    get(filters).headOption
   }
 }
