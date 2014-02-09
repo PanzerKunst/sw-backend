@@ -389,7 +389,6 @@ $ sudo keytool -import -noprompt -trustcacerts -alias Postfix -file /etc/ssl/cer
 ##########
 
 
-
 Setting up Courier IMAP
 
 $ sudo apt-get install courier-authlib-mysql courier-imap courier-imap-ssl
